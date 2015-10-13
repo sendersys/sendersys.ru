@@ -1,0 +1,60 @@
+.title {
+	font-size: 20px;
+}
+
+.container {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background-color: #daecee;
+	position: absolute;
+	background-image: url(/images/uploads/bg.png);
+}
+
+.box_404 {
+
+	background-image: url(/images/uploads/404_icon.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 329px 236px;
+	width: 329px;
+	height: 236px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	
+}
+
+.box_404__title {
+  /* top: -34px; */
+  text-align: center;
+  margin-top: -102px;
+  color: black;
+  font-family: "Trebuchet MS";
+  font-size: 44px;
+  font-weight: 800;
+  position: absolute;
+  width: 354px;
+  margin-left: -8px;
+}
+
+.box_404__text {
+text-align: center;
+  color: black;
+  font-family: "Trebuchet MS";
+  font-style: italic;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.box_404__center {
+  position: relative;
+  margin: 0 auto;
+  width: 440px;
+  height: 50px;
+  margin-top: 301px;
+  margin-left: -55px;
+}
