@@ -11,7 +11,7 @@ use App\Models\Segment;
 <div class = "row mailing_line">
     <div class = "col-md-4 mailing__head">Рассылки</div>
     <div class = "col-md-4 pull-right">
-        <a href="" class ="add_mailing__link pull-right">Добавить рассылку</a>
+        <a href="{{  route('mailing.add') }}" class ="add_mailing__link pull-right">Добавить рассылку</a>
     </div>
 </div>
 <table class="table table-hover mailing__table">
@@ -77,7 +77,7 @@ use App\Models\Segment;
 	         	echo '</td>';
 	         	echo '<td>';
 	         		echo '<a class="mailing__table__update__link">Редактировать</a>';
-	         		echo '<p class="text-right"><a class="mailing__table__start__link pull-right">Запустить</a></p>';
+	         		echo '<p class="text-right"><a href="/dashboard/mailing/start/'.$mailing_option->id.'/" class="mailing__table__start__link pull-right">Запустить</a></p>';
 	         		echo '<p class="text-right"><a class="mailing__table__delete__link pull-right">Удалить</a></p>';
 	         	echo '</td>';
 	         echo '</tr>';
