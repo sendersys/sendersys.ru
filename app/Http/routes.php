@@ -46,6 +46,11 @@ Route::get('logout', function(){
 Route::any('/dashboard/mailing', ['middleware' => 'auth', 'uses'=> 'DashBoardController@mailing']); //рассылки
 Route::any('/dashboard/templates', ['middleware' => 'auth', 'uses'=> 'DashBoardController@templates']); //шаблоны
 
+
+Route::any('/dashboard/templates_update', ['middleware' => 'auth', 'uses'=> 'TemplateController@change_template']); //редактирование шаблона
+Route::any('/dashboard/templates_new', ['middleware' => 'auth', 'uses'=> 'TemplateController@show_template']); //шаблоны
+Route::any('/dashboard/templates_save', ['middleware' => 'auth', 'uses'=> 'TemplateController@save_template']); //Сохранение шаблона
+
 Route::get('email', 'UserController@email'); //тестовая страница
 
 Route::get('mailru-domainJB2lQA3Hk6zDnKLC.html', 'DashBoardController@mailru'); //для подтверждения

@@ -47,6 +47,7 @@
         <ul class="nav dashboard__menu__block col-md-6 col-xs-12 col-sm-8">
           <li class="dashboard__menu__element <?php if($_SERVER['REQUEST_URI']=='/dashboard/mailing/') echo 'active';?>"><a href="/dashboard/mailing/">Рассылки</a></li>
           <li class="dashboard__menu__element <?php if($_SERVER['REQUEST_URI']=='/dashboard/templates/') echo 'active';?>"><a href="/dashboard/templates/">Шаблоны</a></li>
+          <li class="dashboard__menu__element <?php if($_SERVER['REQUEST_URI']=='/dashboard/templates_new/') echo 'active';?>"><a href="/dashboard/templates_new/">Шаблоны(new)</a></li>
            <li class="dashboard__menu__element <?php if($_SERVER['REQUEST_URI']=='/dashboard/widget/') echo 'active';?>"><a href="/dashboard/widget/">Виджеты</a></li>
            <li class="dashboard__menu__element <?php if($_SERVER['REQUEST_URI']=='/dashboard' || $_SERVER['REQUEST_URI']=='/dashboard/audience/' || $_SERVER['REQUEST_URI']=='/dashboard/add_audience/' || $_SERVER['REQUEST_URI']=='/dashboard/add_next_site/') echo 'active';?>"><a href="/dashboard/audience/">Аудитории</a></li>
         </ul>

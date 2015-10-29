@@ -142,8 +142,247 @@ $('.mailing__table__start__link').click(function() {
 });
 
 
+if($('#change__logo__button').length)
+{
+    $('#change__logo__button').click(function(){
+        $('#change__logo__img').click();
+        return(false);
+    });
 
+    $('#change__logo__img').change(function(){
+        var text = $(this).val();
+        if(text) {
+            $('#change__file__text').html(text);
+        }
+    }).change();
+}
+
+
+    $('.change__color__button').click(function(){
+        $(this).siblings('.change__color__input')[0].click();
+        return(false);
+    });
+
+    $('.change__color__input').change(function(){
+        var color = $(this).val();
+        if(color) {
+            $(this).siblings('.change__color__button').css('background', color);
+        }
+    });
 
 });
 
- 	
+var Tchange = {
+    blocks: {
+        header: '#t_header',
+        header_title: '#t_header p',
+        logo: '.tlogo',
+        main_body: '.inner__main',
+        main_block: '#full_block',
+        body: '#body_type',
+        article: '.article_card',
+        article_title: '.article_title',
+        article_button: '.article_button',
+        images: '.template_img',
+        open_else: '#article_all',
+        social_buttons: '#t_socials',
+        application_block: '#t_applications',
+        application_link: '#t_applications a',
+        change_column: '.template__change',
+        sb_text: '.sb_text',
+        address_vk: '.t_vk',
+        address_fb: '.t_fb',
+        address_as: '.app_store',
+        address_gp: '.ggl_play'
+
+    },
+    position:{
+        logo:{
+            left: 'tlogo_left',
+            center: 'tlogo_center',
+            right: 'tlogo_right'
+        },
+        application_block:{
+            left: 'application_center',
+            center: 'application_left',
+            right: 'application_right'
+        },
+        body:{
+            columns: 'f_type',
+            column: 's_type',
+            rows: 't_type'
+        }
+    },
+
+    changeStyle: function(input, optionList) {
+        var blockId = this.blocks[optionList[0]];
+        var style = 'none';
+        var color = '';
+        var radius = input[0].value;
+
+        if(/[:]/.test(optionList[1])) {
+            var property = optionList[1].split(':');
+            var main_input = $('input[name="' + optionList[0] + '|' + property[0] + '"]');
+            var main_input_checked = $('input[name="' + optionList[0] + '|' + property[0] + '"]:checked');
+            switch (input[0].tagName) {
+                case 'INPUT':
+                    if (main_input.is(':checked')) {
+                        color = input[0].value;
+                        style = color;
+                        if (property[0] == 'border') {
+                            style = '1px solid ' + style;
+                        }
+                        $(blockId).css(property[0], style);
+                    }
+                    break;
+                case 'SELECT':
+                    radius = radius + 'px';
+                    if (main_input_checked.val() == '0px' ||  parseInt(main_input_checked.val()) > 19){
+                        return false;
+                    }
+                    else{
+                        $(blockId).css(property[0], radius);
+                    }
+                    break;
+            }
+        }
+        else{
+            switch (input[0].type) {
+                case 'radio':
+                    if(input[0].value != '0px' && parseInt(input[0].value) < 20 && (optionList[0] == 'social_buttons' || optionList[0] == 'application_link')) {
+                       radius = $('select[name="' + input[0].name + ':select"]').val() + 'px';
+                        alert(radius);
+                    }
+                    $(blockId).css('border-radius', radius);
+                    break;
+                case 'checkbox':
+                    if(input.is(':checked')){
+                        color = $('input[name="' + input[0].name + ':color"]').val();
+                        style = color;
+                        if(optionList[1] == 'border'){
+                            style = '1px solid ' + style;
+                        }
+                    }
+                    $(blockId).css(optionList[1], style);
+                    break;
+            }
+        }
+    },
+
+    changeView: function(input) {
+        var blockId = this.blocks[input[0].name];
+        switch (input[0].type) {
+            case 'checkbox':
+                if (input.is(':checked')) {
+                   $(blockId).show();
+                }
+                else {
+                    $(blockId).hide();
+                }
+                break;
+            case 'radio':
+                if (input.is(':checked') && input[0].value == "1") {
+                    $(blockId).show();
+                }
+                else {
+                    $(blockId).hide();
+                }
+                break;
+        }
+
+    },
+
+    changeLink: function(input) {
+
+    },
+
+    changePosition: function(input, optionList) {
+        var blockId = this.blocks[optionList[0]];
+        var pos = this.position[optionList[0]];
+        for (var i in pos) {
+            if (pos.hasOwnProperty(i)) {
+                $(blockId).removeClass(pos[i]);
+            }
+        }
+        $(blockId).addClass(pos[input[0].value]);
+    },
+
+    handleSelected: function(input) {
+
+        if (!input[0]) {return false;}
+        var name = input.prop('name');
+        if(/[|]/.test(name)) {
+
+            var optionList = name.split('|');
+            alert(optionList.join(',,'));
+
+            switch (optionList[1]) {
+                case 'position':
+                    this.changePosition(input, optionList);
+                    break;
+                case 'link':
+                    this.changeLink(input);
+                    break;
+                default : this.changeStyle(input, optionList);
+            }
+        }
+        else{
+           this.changeView(input);
+        }
+    },
+
+    initialize: function(selector) {
+        var t = this;
+
+        var selectors = [
+            this.blocks.change_column + ' input[type="checkbox"]',
+            this.blocks.change_column + ' input[type="radio"]',
+            this.blocks.change_column + ' input[type="color"]',
+            this.blocks.change_column + ' select'
+        ];
+        var text = this.blocks.change_column + ' input[type="text"]';
+        var area = this.blocks.change_column + ' textarea';
+
+
+        $(document).on('change', selectors.join(', '), function(e) {
+            Tchange.handleSelected($(this));
+        });
+
+
+        bkLib.onDomLoaded(function() {
+            var editor = [];
+            var i = 0;
+            $(area).each(function(){
+                var id = $(this).attr('id');
+                editor[i] = new nicEditor({
+                    buttonList : ['fontFamily','bold','italic','underline', 'fontSize', 'left', 'center', 'right', 'forecolor'],
+                    iconsPath: "/images/nicEditorIcons.gif"
+                }).panelInstance(id).addEvent('blur', function(){
+                        if(this.lastContent != undefined){
+                            var currentContent = editor[parseInt(id)].instanceById(id).getContent();
+                            var area = $('#' + id);
+                            if(currentContent != this.lastContent){
+                                // content changed
+                                alert(this.lastContent);
+                                this.lastContent = currentContent;
+                                alert(currentContent);
+                                area.html(currentContent);
+                                var areaList = area.attr('name').split('|');
+                                $(t.blocks[areaList[0]]).html(currentContent);
+                            }
+                        }
+                    }).addEvent('focus', function(){
+                        if(this.lastContent==undefined){
+                            this.lastContent = editor[parseInt(id)].instanceById(id).getContent();
+                    }
+                    });
+                i++;
+            });
+        });
+
+    }
+};
+
+if($('form.change_template').length){
+    Tchange.initialize('form.change_template');
+}

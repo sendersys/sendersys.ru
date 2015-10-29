@@ -413,8 +413,8 @@ class DashBoardController extends BaseController
 		if(isset($tmp_user_site) && $tmp_user_site!=null) {
 				$subscribers_find = Subscribers::where('email', '=', $request->search)->where('segment_id', '=', $id)->first();
 		}
-		else $no_subscribers = "Подпичик не найден";
-		if(!isset($subscribers_find)) $no_subscribers = "Подпичик не найден";
+		else $no_subscribers = "Подписчик не найден";
+		if(!isset($subscribers_find)) $no_subscribers = "Подписчик не найден";
 
 		return redirect()->back()->with('subscribers_find', $subscribers_find)->with('not_found', $no_subscribers);
 	}
