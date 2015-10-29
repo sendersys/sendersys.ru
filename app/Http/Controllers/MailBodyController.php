@@ -239,7 +239,7 @@ class MailBodyController extends BaseController {
                                </tr>";
         }
         ///////////////// Формирование шаблона /////////////////////////
-        $str_template = "<div style=""><table width='100%' style='margin-bottom: 20px; max-width: 620px;'>"
+        $str_template = "<div style=''><table width='100%' style='margin-bottom: 20px; max-width: 620px;'>"
                             . $header_block . $full_block . $body_types . $open_more .
                               "<tr><td><span style='text-align: center; font-size: 17px; margin-top: 20px; display: block; margin-bottom: 17px;'>
                                     Если вы не видите картинки, пожалуйста <a href='' style='text-decoration: underline'>нажмите сюда &#187;</a></span>
