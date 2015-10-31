@@ -1,4 +1,4 @@
 @include('dashboard.header_v2')
-ШАБЛОНЫ
-</div>
+ШАБЛОНЫ test
+@include('dashboard.additdiv')
 @include('dashboard.footer')

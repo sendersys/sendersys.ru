@@ -1,3 +1,5 @@
+@import "dashboard/add_delivery.css";
+
 a:hover, a:focus {
   text-decoration: none;
 }

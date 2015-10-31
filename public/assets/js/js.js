@@ -23,6 +23,58 @@ $(function(){
             	}
                 
  });
+    $('.template_select').multiselect({
+         buttonClass: 'btn btn-default dropdown-toggle content_type__button',
+         buttonContainer: '<div class="btn-group content_type__group" />',
+         buttonText: function(options, select) {
+                        return 'Выберите шаблон';
+                    },
+         selectedClass: 'multiselect-selected content_type__element',
+         onChange: function(element, checked) {
+                        if(checked === true) {
+                            // console.log(element);
+                        }
+                    }
+    });
+    $('.auditors_select').multiselect({
+         buttonClass: 'btn btn-default dropdown-toggle content_type__button',
+         buttonContainer: '<div class="btn-group content_type__group" />',
+         buttonText: function(options, select) {
+                        return 'Выберите аудиторию';
+                    },
+         selectedClass: 'multiselect-selected content_type__element',
+         onChange: function(element, checked) {
+                        if(checked === true) {
+                            // console.log(element);
+                        }
+                    }
+    });
+    $('.deliveryPeriod').multiselect({
+         buttonClass: 'btn btn-default dropdown-toggle content_type__button',
+         buttonContainer: '<div class="btn-group content_type__group" />',
+         buttonText: function(options, select) {
+                        return 'Периодичность рассылки';
+                    },
+         selectedClass: 'multiselect-selected content_type__element',
+         onChange: function(element, checked) {
+                        if(checked === true) {
+                            // console.log(element);
+                        }
+                    }
+    });
+    $('.deliveryTimes').multiselect({
+         buttonClass: 'btn btn-default dropdown-toggle content_type__button',
+         buttonContainer: '<div class="btn-group content_type__group" />',
+         buttonText: function(options, select) {
+                        return 'Время отправки';
+                    },
+         selectedClass: 'multiselect-selected content_type__element',
+         onChange: function(element, checked) {
+                        if(checked === true) {
+                            // console.log(element);
+                        }
+                    }
+    });
 
  $('.content_category').multiselect({
  	 buttonClass: 'btn btn-default dropdown-toggle content_type__button',
