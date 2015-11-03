@@ -1832,7 +1832,7 @@ line-height: 1.3;
     width: 74px;
     height: 62px;
     margin-top: 2px;
-    margin-left: 11px;
+    margin-left: 23px;
 }
 
 
@@ -1943,6 +1943,7 @@ line-height: 1.3;
     width: 32px;
     border: 1px solid #4F153D;
     height: 30px;
+    margin-left: 17px;
     margin-right: 20px;
     background: #FDF0F9;
 }
@@ -1966,6 +1967,7 @@ line-height: 1.3;
     width: 26px;
     border: 1px solid #4F153D;
     height: 25px;
+    margin-left: 16px;
     margin-right: 19px;
     background: #FDF0F9;
 }
@@ -2056,6 +2058,7 @@ margin-top: 16px;
 
 .change__application__position label{
     width: 53px;
+    margin-left: 26px;
     height: 21px;
     border: 1px solid #CCCCCC;
     border-radius: 5px;
@@ -2418,3 +2421,102 @@ span.select__description{
     margin: 0 auto;
 }
 
+
+
+
+
+.change__block__full__input input[type=checkbox],  .change__block__input input[type=checkbox] {
+    vertical-align: top;
+    margin: 0 5px 0 0;
+    width: 14px;
+    height: 14px;
+}
+
+.change__block__full__input input[type=checkbox]:not(checked), .change__block__input input[type=checkbox]:not(checked) {
+    position: absolute;
+    opacity: 0;
+}
+.change__block__full__input input[type=checkbox]:not(checked) + label, .change__block__input input[type=checkbox]:not(checked) + label {
+    position: relative;
+    padding: 0 0 0 21px;
+}
+.change__block__full__input input[type=checkbox]:not(checked) + label:before, .change__block__input input[type=checkbox]:not(checked) + label:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 15px;
+    background: url(/images/template_change_bg.png) no-repeat -7px -308px;308
+}
+
+
+.change__block__full__input input[type=checkbox]:checked  + label:before, .change__block__input input[type=checkbox]:checked + label:before {
+    background: url(/images/template_change_bg.png) no-repeat -7px -290px;
+}
+
+
+
+
+
+.change__block__full__input input[type=radio], .change_body_types input[type=radio], .change__block__input input[type=radio] {
+    vertical-align: top;
+    margin: 0 5px 0 0;
+    width: 14px;
+    height: 14px;
+}
+
+.change__block__full__input input[type=radio]:not(checked),.change_body_types input[type=radio]:not(checked), .change__block__input input[type=radio]:not(checked) {
+    position: absolute;
+    opacity: 0;
+}
+.change__block__full__input input[type=radio]:not(checked) + label,.change_body_types input[type=radio]:not(checked) + label, .change__block__input input[type=radio]:not(checked) + label {
+    position: relative;
+    padding: 0 0 0 21px;
+}
+.change__block__full__input input[type=radio]:not(checked) + label:before, .change_body_types input[type=radio]:not(checked) + label:before, .change__block__input input[type=radio]:not(checked) + label:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 15px;
+    background: url(/images/template_change_bg.png) no-repeat -7px -308px;
+}
+
+
+.change__design input[type=radio]:not(checked) + label:before{
+    top: 6px;
+    left: -20px;
+}
+ .change__design__small input[type=radio]:not(checked) + label:before{
+     top: 4px;
+     left: -20px;
+ }
+
+ .change__application__position input[type=radio]:not(checked) + label:before{
+     top: 2px;
+     left: -25px;
+ }
+
+.change_body_types input[type=radio]:not(checked) + label:before{
+     top: 2px;
+     left: -25px;
+ }
+
+
+.change__block__full__input input[type=radio]:checked  + label:before, .change_body_types input[type=radio]:checked  + label:before,  .change__block__input input[type=radio]:checked + label:before {
+    background: url(/images/template_change_bg.png) no-repeat -7px -290px;
+}
+
+
+
+
+.change_body_types label{
+    margin-left: 25px;
+}
+
+.change_logo_position input[type=radio] {
+    position: relative !important;
+    opacity: 1 !important;
+}

@@ -82,9 +82,11 @@ class MailBodyController extends BaseController {
         $article_button_style = $article_button_bg . ' ' . $article_button_br . ' ' . $article_button_br_color;
         $article_button_text = isset($property_array['article_button']['text']) ? $property_array['article_button']['text'] : 'Подробнее';
 
-        $article_button = '';
+        $article_button = [];
         if( isset($property_array['article_button']['value'])){
-            $article_button = "<a href='{*link*}' style='color: #C23B73; text-decoration: none; font-size: 12px;padding: 5px 5px; " . $article_button_style . "'>Подробнее</a>";
+            for($i = 0; $i < 3; $i++){
+                $article_button[] = "<a href='{*link".$i."*}' style='color: #C23B73; text-decoration: none; font-size: 12px;padding: 5px 5px; " . $article_button_style . "'>Подробнее</a>";
+            }
         }
 
         ///////////////////////////// Карточки статей и их стили ////////////////////////////////////
@@ -113,7 +115,7 @@ class MailBodyController extends BaseController {
                                                   " . $columns_tr . "
                                                      <td align='center' valign=' " .$rows_v_align. " ' style='border-collapse:collapse;padding:10px 10px 14px 10px;'>
                                                         <a href='{*link1*}' style='color: black; cursor: pointer; font-size: 15px; padding-top: 2px; margin-bottom: 21px; padding-left: 8px; font-weight: bold; text-align: left; display: block; line-height: 19px;'>Заголовок статьи, заголовок статьи, заголовок статьи...</a>
-                                                         " . $article_button . "
+                                                         " . $article_button[1] . "
                                                      </td>
                                                   </tr>
                                             </table>
@@ -127,7 +129,7 @@ class MailBodyController extends BaseController {
                                                    " . $columns_tr . "
                                                     <td align='center' valign=' " .$rows_v_align. " ' style='border-collapse:collapse;padding:10px 10px 14px 10px;'>
                                                        <a href='{*link2*}' style='color: black; cursor: pointer; font-size: 15px; padding-top: 2px; margin-bottom: 21px; padding-left: 8px; font-weight: bold; text-align: left; display: block; line-height: 19px;'>Заголовок статьи, заголовок статьи, заголовок статьи...</a>
-                                                        " . $article_button . "
+                                                        " . $article_button[2] . "
                                                     </td>
                                                  </tr>
                                               </table>
@@ -147,8 +149,8 @@ class MailBodyController extends BaseController {
                                  </tr>
                                  <tr>
                                     <td align='center' valign='middle' style='border-collapse:collapse;padding:10px 10px 15px 10px;'>
-                                      <a href='{*link_block*}' style=' color: black; cursor: pointer; font-size: 18px; padding-top: 5px; margin-bottom: 4px; padding-left: 9px; font-weight: bold;text-align: left; display: block;line-height: 21px;'>Заголовок статьи, заголовок статьи, заголовок статьи, заголовок статьи...</a>
-                                      " . $article_button . "
+                                      <a href='{*link0*}' style=' color: black; cursor: pointer; font-size: 18px; padding-top: 5px; margin-bottom: 4px; padding-left: 9px; font-weight: bold;text-align: left; display: block;line-height: 21px;'>Заголовок статьи, заголовок статьи, заголовок статьи, заголовок статьи...</a>
+                                      " . $article_button[0] . "
                                     </td>
                                  </tr>
                              </table>

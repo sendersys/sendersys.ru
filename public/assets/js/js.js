@@ -251,7 +251,6 @@ var Tchange = {
                 case 'radio':
                     if(input[0].value != '0px' && parseInt(input[0].value) < 20 && (optionList[0] == 'social_buttons' || optionList[0] == 'application_link')) {
                        radius = $('select[name="' + input[0].name + ':select"]').val() + 'px';
-                        alert(radius);
                     }
                     $(blockId).css('border-radius', radius);
                     break;
@@ -312,10 +311,8 @@ var Tchange = {
         if (!input[0]) {return false;}
         var name = input.prop('name');
         if(/[|]/.test(name)) {
-
             var optionList = name.split('|');
-            alert(optionList.join(',,'));
-
+            //alert(optionList.join(',,'));
             switch (optionList[1]) {
                 case 'position':
                     this.changePosition(input, optionList);
@@ -330,6 +327,7 @@ var Tchange = {
            this.changeView(input);
         }
     },
+
 
     initialize: function(selector) {
         var t = this;
@@ -355,7 +353,7 @@ var Tchange = {
             $(area).each(function(){
                 var id = $(this).attr('id');
                 editor[i] = new nicEditor({
-                    buttonList : ['fontFamily','bold','italic','underline', 'fontSize', 'left', 'center', 'right', 'forecolor'],
+                    buttonList : ['fontFamily','bold','italic','underline', 'fontCustomSize', 'left', 'center', 'right', 'forecolor'],
                     iconsPath: "/images/nicEditorIcons.gif"
                 }).panelInstance(id).addEvent('blur', function(){
                         if(this.lastContent != undefined){
@@ -363,9 +361,7 @@ var Tchange = {
                             var area = $('#' + id);
                             if(currentContent != this.lastContent){
                                 // content changed
-                                alert(this.lastContent);
                                 this.lastContent = currentContent;
-                                alert(currentContent);
                                 area.html(currentContent);
                                 var areaList = area.attr('name').split('|');
                                 $(t.blocks[areaList[0]]).html(currentContent);

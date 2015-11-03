@@ -219,7 +219,15 @@ var bkEvent = {
         return this;
     },
     fireEvent : function() {
+
+
         var args = bkLib.toArray(arguments), evType = args.shift();
+        //if(evType == "selected"){
+        //   alert(args.join(' '));
+        //
+        //    alert('fire ' + evType );
+        //}
+
         if(this.eventList && this.eventList[evType]) {
             for(var i=0;i<this.eventList[evType].length;i++) {
                 this.eventList[evType][i].apply(this,args);
@@ -452,7 +460,9 @@ var nicEditorInstance = bkClass.extend({
             this.setContent('<br />');
         }
         this.instanceDoc = document.defaultView;
-        this.elm.addEvent('mousedown',this.selected.closureListener(this)).addEvent('keypress',this.keyDown.closureListener(this)).addEvent('focus',this.selected.closure(this)).addEvent('blur',this.blur.closure(this)).addEvent('keyup',this.selected.closure(this));
+        this.elm.addEvent('mousedown',
+            this.selected.closureListener(this)).addEvent('keypress',
+            this.keyDown.closureListener(this)).addEvent('focus',this.selected.closure(this)).addEvent('blur',this.blur.closure(this)).addEvent('keyup',this.selected.closure(this));
         this.ne.fireEvent('add',this);
     },
 
@@ -947,6 +957,8 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
     },
 
     addForm : function(f,elm) {
+
+
         this.form = new bkElement('form').addEvent('submit',this.submit.closureListener(this));
         this.pane.append(this.form);
         this.inputs = {};
@@ -1142,7 +1154,7 @@ var nicEditorSelect = bkClass.extend({
 });
 
 var nicEditorFontSizeSelect = nicEditorSelect.extend({
-    sel : {1 : '10', 2 : '11', 3 : '12', 4 : '13', 5 : '14', 6 : '15'},
+    sel : {'10px' : '10', '11px' : '11', '12px' : '12', '13px' : '13', '14px' : '14', '15px' : '15'},
     init : function() {
         this.setDisplay('10');
         for(itm in this.sel) {
@@ -1234,3 +1246,26 @@ var nicEditorBgColorButton = nicEditorColorButton.extend({
 
 nicEditors.registerPlugin(nicPlugin,nicColorOptions);
 
+var nicSelectOptionsCustomFormat = {
+    buttons : {
+        'fontCustomSize' : {name : __('Font size'), type : 'nicEditorCustomFormatSelect'}
+    }
+};
+var nicEditorCustomFormatSelect = nicEditorSelect.extend({
+    sel : {'11px' : '11px', '13px' : '13px', '17px' : '17px', '19px' : '19px', '20px' : '20px'},
+
+    init : function() {
+        this.setDisplay('Font size');
+        for(itm in this.sel) {
+            this.add(itm,'<span style="size:'+itm+'">'+this.sel[itm]+'</span>');
+        }
+    }
+
+    ,update : function(elm) {
+        var newNode = document.createElement('span');
+        newNode.style.fontSize = elm;
+        var rng = this.ne.selectedInstance.getRng().surroundContents(newNode);
+        this.close();
+    }
+});
+nicEditors.registerPlugin(nicPlugin,nicSelectOptionsCustomFormat);

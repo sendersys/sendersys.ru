@@ -16,7 +16,8 @@ class EmailTemplates extends Migration
             $table->increments('id');
             $table->integer('domen_id', 10)->nullable();
             $table->integer('user_id', 10)->nullable();
-            $table->text('properties')->nullable();;
+            $table->text('properties')->nullable();
+            $table->binary('logo_storage');
             $table->timestamps();
         });
     }
