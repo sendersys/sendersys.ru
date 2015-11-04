@@ -15,6 +15,10 @@ class CreateSubscriberStatusTable extends Migration
         Schema::create('subscriber_status', function (Blueprint $table) {
             $table -> increments('id');
             $table -> string('status_name')->nullable(); //Имя статуса
+<<<<<<< HEAD
+=======
+            $table->string('description')->nullable(); //описание статуса
+>>>>>>> develop2
             $table -> timestamps();
         });
     }

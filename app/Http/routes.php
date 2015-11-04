@@ -43,11 +43,14 @@ Route::get('logout', function(){
 	return redirect()->intended('/'); //выход из ЛК
 });
 
+
 Route::get('/dashboard/mailing/add', ['as' => 'mailing.add', 'middleware' => 'auth', 'uses' => 'DashBoardController@addDelivery']); //добавление рассылки
 Route::get('/dashboard/mailing/start/{mailing_id}', ['middleware' => 'auth', 'uses' => 'DashBoardController@mailingStart']); //запуск рассылки
 
 Route::any('/dashboard/mailing', ['as'=> 'mailing.main', 'middleware' => 'auth', 'uses'=> 'DashBoardController@mailing']); //рассылки
-Route::any('/dashboard/templates', ['middleware' => 'auth', 'uses'=> 'DashBoardController@templates']); //шаблоны
+Route::any('/dashboard/templates', ['middleware' => 'auth', 'uses'=> 'TemplateController@show_template']); //шаблоны
+Route::any('/dashboard/templates_update', ['middleware' => 'auth', 'uses'=> 'TemplateController@change_template']); //редактирование шаблона
+Route::any('/dashboard/templates_save', ['middleware' => 'auth', 'uses'=> 'TemplateController@save_template']); //Сохранение шаблона
 
 Route::get('email', 'UserController@email'); //тестовая страница
 
