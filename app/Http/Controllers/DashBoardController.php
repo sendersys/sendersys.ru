@@ -238,7 +238,6 @@ class DashBoardController extends BaseController
 			'delivery_periods' => $delivery_periods,
 			'delivery_times' => $delivery_times
 		));
-=======
 		
 		return redirect()->back()->with('showmodal_change_subscribers', $showmodal_change_subscribers)->with('subscribes', $subscribes);
 	}

@@ -23,7 +23,6 @@ $(function(){
             	}
                 
  });
-<<<<<<< HEAD
     $('.template_select').multiselect({
          buttonClass: 'btn btn-default dropdown-toggle content_type__button',
          buttonContainer: '<div class="btn-group content_type__group" />',
@@ -76,8 +75,6 @@ $(function(){
                         }
                     }
     });
-=======
->>>>>>> develop2
 
  $('.content_category').multiselect({
  	 buttonClass: 'btn btn-default dropdown-toggle content_type__button',
@@ -197,13 +194,10 @@ $('.mailing__table__start__link').click(function() {
 });
 
 
-<<<<<<< HEAD
-
 
 });
 
- 	
-=======
+
 if($('#change__logo__button').length)
 {
     $('#change__logo__button').click(function(){
@@ -444,4 +438,3 @@ var Tchange = {
 if($('form.change_template').length){
     Tchange.initialize('form.change_template');
 }
->>>>>>> develop2

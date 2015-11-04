@@ -22,7 +22,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="87684895-5618-45b3-9ae1-0198615bcf3e">
+        <schema name="sakhalin" object-types="function, procedure, table, view" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="87684895-5618-45b3-9ae1-0198615bcf3e">

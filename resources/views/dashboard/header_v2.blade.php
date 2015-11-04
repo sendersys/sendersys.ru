@@ -47,13 +47,8 @@
         <ul class="nav dashboard__menu__block col-md-6 col-xs-12 col-sm-8">
           <li class="dashboard__menu__element <?php if($_SERVER['REQUEST_URI']=='/dashboard/mailing/') echo 'active';?>"><a href="/dashboard/mailing/">Рассылки</a></li>
           <li class="dashboard__menu__element <?php if($_SERVER['REQUEST_URI']=='/dashboard/templates/') echo 'active';?>"><a href="/dashboard/templates/">Шаблоны</a></li>
-<<<<<<< HEAD
-           <li class="dashboard__menu__element <?php if($_SERVER['REQUEST_URI']=='/dashboard/widget/') echo 'active';?>"><a href="/dashboard/widget/">Виджеты</a></li>
-           <li class="dashboard__menu__element <?php if($_SERVER['REQUEST_URI']=='/dashboard' || $_SERVER['REQUEST_URI']=='/dashboard/audience/' || $_SERVER['REQUEST_URI']=='/dashboard/add_audience/' || $_SERVER['REQUEST_URI']=='/dashboard/add_next_site/') echo 'active';?>"><a href="/dashboard/audience/">Аудитории</a></li>
-=======
           <li class="dashboard__menu__element <?php if($_SERVER['REQUEST_URI']=='/dashboard/widget/') echo 'active';?>"><a href="/dashboard/widget/">Виджеты</a></li>
           <li class="dashboard__menu__element <?php if($_SERVER['REQUEST_URI']=='/dashboard' || $_SERVER['REQUEST_URI']=='/dashboard/audience/' || $_SERVER['REQUEST_URI']=='/dashboard/add_audience/' || $_SERVER['REQUEST_URI']=='/dashboard/add_next_site/') echo 'active';?>"><a href="/dashboard/audience/">Аудитории</a></li>
->>>>>>> develop2
         </ul>
 
         <a href = "mailto:support@sendersys.ru" class="col-md-2 col-md-offset-4 col-xs-1 col-sm-2 col-sm-offset-2 dashboard__help">Помощь</a>
