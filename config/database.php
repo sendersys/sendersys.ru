@@ -56,6 +56,7 @@ return [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
             'database'  => env('DB_DATABASE', 'sendersys'),
+
             'username'  => env('DB_USERNAME', 'sendersys'),
             'password'  => env('DB_PASSWORD', 'sZc7XSchsYzjbV6C'),
             'charset'   => 'utf8',

@@ -13,9 +13,6 @@
 </head>
 <body>
 
-
-
-
 <div class="modal fade" id="login_form" tabindex="-1" role="dialog" aria-labelledby="login_label" aria-hidden="true">
   <?php echo Form::open(array('url' => URL::to('login_standart', array(), true), 'method' => 'post', 'class' => 'modal-dialog modal-lg', 'id' => 'login_standart_form')); ?>
     <div class="modal-content login-content">

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/sendersys.ru.iml" filepath="$PROJECT_DIR$/.idea/sendersys.ru.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sendersys.iml" filepath="$PROJECT_DIR$/.idea/sendersys.iml" />
     </modules>
   </component>
 </project>

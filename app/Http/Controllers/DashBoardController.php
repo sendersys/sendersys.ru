@@ -24,9 +24,9 @@ use Cookie;
 use Crypt;
 
 function http_post( $url, $data ) {
-	
+
 	$eol = "\r\n";
-	
+
 	$post = '';
 
 	if (is_array($data)) {
@@ -44,39 +44,40 @@ function http_post( $url, $data ) {
 			$content_type = 'text/html';
 	}
 	if ((($u = parse_url($url)) === false) || !isset($u['host'])) return false;
-	
+
 	if (!isset($u['scheme'])) $u['scheme'] = 'http';
-			
+
 	$request = $post;
-	
+
 	$host = ($u['scheme'] == 'https') ? 'ssl://'.$u['host'] : $u['host'];
-	
+
 	if (isset($u['port']))
 		$port = $u['port'];
 	else
 		$port = ($u['scheme'] == 'https') ? 443 : 20222;
-	
+
 	$fp = @fsockopen( $host, $port, $errno, $errstr, 10);
 	if ($fp) {
-		
+
 		$content = '';
 		$content_length = false;
 		$chunked = false;
-		
+
 		fwrite($fp, $request);
 		fclose($fp);
 
 		return $content;
-		
+
 	} else {
 		return false;
 	}
 }
 
+
 class CSV {
 
     private $_csv_file = null;
- 
+
     /**
      * @param string $csv_file  - путь до csv-файла
      */
@@ -85,29 +86,29 @@ class CSV {
             $this->_csv_file = $csv_file; //Записываем путь к файлу в переменную
         }
         else { //Если файл не найден то вызываем исключение
-            throw new Exception("Файл ".$csv_file." не найден"); 
+            throw new Exception("Файл ".$csv_file." не найден");
         }
     }
- 
+
     public function setCSV(Array $csv) {
-        //Открываем csv для до-записи, 
+        //Открываем csv для до-записи,
         //если указать w, то  ифнормация которая была в csv будет затерта
-        $handle = fopen($this->_csv_file, "a"); 
- 
+        $handle = fopen($this->_csv_file, "a");
+
         foreach ($csv as $value) { //Проходим массив
             //Записываем, 3-ий параметр - разделитель поля
-            fputcsv($handle, explode(";", $value), ";"); 
+            fputcsv($handle, explode(";", $value), ";");
         }
         fclose($handle); //Закрываем
     }
- 
+
     /**
      * Метод для чтения из csv-файла. Возвращает массив с данными из csv
      * @return array;
      */
     public function getCSV() {
         $handle = fopen($this->_csv_file, "r"); //Открываем csv для чтения
- 
+
         $array_line_full = array(); //Массив будет хранить данные из csv
         //Проходим весь csv-файл, и читаем построчно. 3-ий параметр разделитель поля
         while (($line = fgetcsv($handle, 0, ";")) !== FALSE) { 
@@ -166,7 +167,7 @@ class DashBoardController extends BaseController
 		$message['template'] = "<div id=\":10a\" class=\"ii gt m1508779810d70514 adP adO\"><div id=\":146\" class=\"a3s\" style=\"overflow: hidden;\"><u></u><div><center><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"background-color:#fbfbfb;float:center;font-family:Open Sans,sans-serif,Arial\" height=\"100%\"><tbody><tr><td colspan=\"6\" width=\"100%\" valign=\"top\" style=\"max-width:620px\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"max-width:620px;border:1px solid #dddddd;background-color:#ffffff;margin-top:10px\"><tbody><tr><td valign=\"middle\" style=\"padding:0% 0% 0% 4%;border-bottom:1px solid #dddddd;width:28%;max-width:200px;height:80px\" align=\"left\"><div><a href=\"https://eventing.coursera.org/redirect/BgqxA_7VmQMo0Rt6-0WqBdvizpcgRnvg1T2rRUFJtJt6_oTRdb9aMNAW3Og4s4SoooadbIUS9cl-OvjGe7oHrA.pmCglovPnQSL_otgnyKkbQ._loNal9Qsqekvmx-EuNmTsEg1H5PucPPig9LNSWOgG9cLvDE8GPLP2VAnEWibEEqq931670Li4mRYz4j13cIIsTdjSQw9pdG0WXWsg7Op3sn4wWaSrgeq0xktFshzJmyLCvSp1o69ytjoMWQSgCrm482UGmP3lyDgIXP5afCdRfYlDSmH_VruPty431d-yZwlRy9iR9xJzmKVnCQJM8zX2fCwypUeUuWh8ke8_-g76_PyMxwddJZKFdppd7jDhblMzIAc9HSvp4x2HlxoGadQ5C2QGZEqwQ_HQJrzmyZEW5C7O2i3YsPdT_smhkHeaFtef9jQFv4rKewrZG8hTshonA-nAPH5wCMRP4dPPKLtHjieuz9xGwxCUdGDHtdQGQHnFPTtcdeNsIAXPKaeAcymC_HhzroU3cKWPq2zLkCERnbEVYe50rxvst1NAaBd_H8mk3vmquG5kSDdHf4-cW9B9EzpnyRmYjbLN_Wd17TnctYKVC2ePNPDn9Gtkd3OGXXP5gqAaAyDnU0JEFpe3TH9REmN8bgJR68OWM65Omuin8OmWdFriekgADgcdgwFzW7_AHVBfNCXpPJijrP3CCRuhk64PaJT2Ak62Tp2hqcFKSjfrhSm9N4rBouSGlveWc_\" target=\"_blank\"><img src=\"https://ci6.googleusercontent.com/proxy/sNHUXLbhxxD8aMmfQsi2gkSidA9_f5GOCbRmeNoeIkrXc-gi8l6ixQmOQn-t6Dw5JjWclZgRDon7ZS_5tby1m6ubKuSrutA1D2hhnxtgdgnDmPaG20cHj6E=s0-d-e1-ft#http://coursera-newsletter.s3.amazonaws.com/logo_150_newsletter.png\" alt=\"coursera\" style=\"width:84%;max-width:140px\" class=\"CToWUd\"></a></div></td><td valign=\"middle\" style=\"padding:0% 4% 0% 0%;border-bottom:1px solid #dddddd;width:70%;max-width:420px;font-size:16px!important;height:80px\" align=\"right\"><div><a href=\"https://eventing.coursera.org/redirect/rKwjZ13eNnsUXVkLYleQV1IjXKKXn8I_Q_5YggkkYj8926lmGsp528Cu1Uqx7DQ4UNAk3VAG1mgFFXZIVR3zSw.cH53ROuE_5lAatQSbyzVBA.bqY15xVk4ynmOc7utSGZ3t2yBykWzR-b2swKnnt6u9E2B6147DsRJgmoD_2qGBEY4PbfiSmWdqbM2oRYEPqmq39l5boSkvl70pZpG-XUH13MtD7TMkp-Ww5vkpAU3qbtrweXt5b7aNbylxe-iB_FATDJF-I3ECRXMgtPlXlbhZ68WwM4wf3D-VaSKlbkDABwr8WtVBupWNUw3V4Ktoo9qgGWM_e743cw72cL09CKuGg9AupCNJf2044-cNj0t630cRTSmBIry_kcfcIeZyBA7xPVmXfy2MINVBqrCApBEjgYM0-VaYi_mNkXJqXiomWf2WbIJ_aQP_u3oAZJnaC9APaFRhP4quxmtc2mPOaDkdcYRphtU3Mln4SSx7vRYrua4yoZhLeWtfJoX6Qaps1vrjadV7zwefMPUSdyIzYxgVtQ-oD8kjlB9gXupQ8YF6vn2UnIoRhxJ3aHX-CfQJ2tuQngKWmaS9Kzif6vSxeWjBiJn4qYa0dxCHaaLeDLihbZFkqgOY6YmvD1V5yxDh_kexE3IbtaWWA13W6ogfUkPJy46U3ujT-INtd_GiWZWLGXHlyb6hfnw398TxqX5vzwXCdOKwsznKR9lWAPgRdXTh6yIPSrRn0wtx0ZUn_d8OYT\" style=\"text-decoration:none;color:#787878;border-right:1px gray solid;padding-right:8px\" target=\"_blank\">My Courses</a><a href=\"https://eventing.coursera.org/redirect/XmI70eS2g9LxKZ2A1wMkF1jz3zeR25BkewECpthtKBMZAQFxC7tN9EF7LWvBaZSI0E8IkiNDiRIxUEKchJyfVQ.SSbbeuRmV3b_FmTN-tLisQ.jGCmb1HKKyBwtdhEzcfxoPJ3kO4lBXyQ0UBflIvalRUUFd77K3osFMP7JeQI1MCtegRB5OdwZ7W5jajPyMjfQU1FvglyBd54uLJq0pS_aAUNCa00cbF8Fs7aXqqLYIdNG47n4sqLKhoNIOVp8JtH9gRI1ldtU18ln9Z0ndEOAKOmuOGw8A24ZWbyba-SahhoXRoHha-KuKUFbUHV8psG78GCbO3Cj3NiMi-lxCesi-1xdWMwzNKdYWNPLdjxjzElMU-j7I3GgvdstpuOsnd7OBlRmZxX9eW5g8jv0S23LLDZ3y6ZqJrbG7eYF0ZokLr7hLYhGvbGkRLJHiqyW4Tkwr26NQIPzXN7cvBzFaFc2JMCuox9CT6Lr9hMlfBQq5GbPXLfygV-Q1jwQ5YbLAGc7qcGkfRSFOSYYH_pr8ukC5ULUFRdUu9zIWwGhcMgz-x7GMvI-cNp-uhKyAfEWuFURToy7stWw0YHcSL7uFm54ThmAjJ13dSD6Vjnd1jek5FVRAF4G7UmHK3qJJXfPd6otSKp5aPGZo9epvvhTWAc5lAwNP2AhV3JKwhEF9jxvZoAch_PhJAWPz6zrnyehecxmDRhvwcNIIRt57wgN858ELktUQiOcdzYfEcevyn8Lm3p\" style=\"text-decoration:none;color:#787878;padding-left:8px\" target=\"_blank\">Course Catalog</a></div></td></tr><tr><td colspan=\"6\" valign=\"top\"><table style=\"width:100%;max-width:620px;float:center;font-family:Open Sans,sans-serif\"><tbody><tr><td colspan=\"6\" style=\"text-align:left;height:100%;padding:4% 4% 4% 4%\"><span style=\"line-height:36px;letter-spacing:.6px;color:#b18767;font-size:24px;font-weight:400;padding-bottom:1%;display:block\">Welcome,</span><p style=\"display:block;font-family:'Arial';vertical-align:top\">Thanks for enrolling in Введение в машинное обучение, beginning on January 26, 2016. We're excited you'll be learning with us.</p><p style=\"display:block;font-family:'Arial';vertical-align:top\">We'll send you an email reminder when the course is open for learning.</p><p style=\"display:block;vertical-align:top;margin-bottom:10px\"><a href=\"https://eventing.coursera.org/redirect/tc2k5w0VRZT_xfdBmn394gl4N_ghmMBl_MVSuqD7rd79dBdDEr_qJKO72iV6jcgFJGXg-DcYz86kZXSTEdAMZQ.ex02PUhW8z5o4j1L9LjRuQ.a_DAwKxc9nI_rnMPmnFtpmuWZ6KIR9GcgxP9NtZu_bOvXzBs1urD8Cb2_qHAMO5jYRq0-t_5-zhs7P-CkSL0ea89Y46gy_tLFXduzUCL4LYvKlBshWfZTm_9_qr6xwkZ0vQIHnEb8lSQhDBZxti6TrPtyIEiUq58pggS94XlFY5vmOERpTnFkf28h3r8luWl74Jthuo3LGAv797jeoexBYIKaLmKc3iSD4J35FrkUrA3xu_hUmPc1teUO4-Ttj25UISP3WAQOrUepHDdifsUpmuMTdFdgOGirGXd7RnU705OeI-by-v_s-OV5VNrDdDlWu07ZI4kB3yE8CRnl4DoWyQ6c5oRW8mZoCoFkA8vlPxrjyOmhN5lKIC7HGKYcOe8_-oikGVNNN8jNfxe-nZeWY3UHVfxB5I_8n9-YLRrsIsrWqiUHxfQF1ZoKcumNHDrrHB3A_Nr36edrtXSZO7d7GaRBWcBaRZHLsA5BvI4ttExT1PZvMHl6UG9qpqiqHmnnDXv2kzdPb1fC_iV1foUnYegmgAMmSsfYH9UzYJQ6JJWxNofj-d-loG7P6zLOy8JR47ozpQmMfOMZ11gJbnnlQ\" target=\"_blank\"><img src=\"https://ci5.googleusercontent.com/proxy/OW2tGYHVjFuD2G_od2KNGywRg6FGd6PCHZhvQmhVycSPedN2r1wc64cC1AHOkGOVd3q7B2x_NHfOW8qsu0G6CH03oFDfTTxW-KE5V7UH8KpuJxyR0GEDvG8mBgoS0wnNwavcKwdFZqo_dWTWYuX2hINH8czlRTVvFapGIQ=s0-d-e1-ft#https://coursera-course-photos.s3.amazonaws.com/a2/c23430579811e59644373576122c07/Ya-Icon-new-size.jpg\" alt=\"Введение в машинное обучение\" style=\"width:100%;max-width:600px\" class=\"CToWUd\"></a></p></td></tr><tr><td colspan=\"3\" style=\"padding:0% 0% 4% 4%;float:left\"><a href=\"https://eventing.coursera.org/redirect/M6SHc0bjwtRAPV_uI7WKWLR79PGYsTdMb0l-AwoOcN2U9TfAmQYffy-YdQzupZsWkvS-XP5qm_-A9AI0a-GnHA.CjbumhbB2CU1LNye48DFYw.XBP_5mQhn6RvboBFRUSHL0OF7FHZgir2HIT3IEZz2mH5f4NJCbnh-XjDFs_6f2g0UnL9gMdqvmDyleUK4lM20I-_rN3bM9LV3dtMwfpDsrwdSTq5ofBFHM9QH1TIcrZirZZthP6sQhsbr2LWqCJdge01a7tiZX0helDBU8THBTuwJPrv1GGENvx9RoVEnBKnKAS1TXU9K59s7SO_202UwEE94LbXx2EZWS5NVr6ASMVV2ndGcTq_zLkqxtj7AJAcTdRJ9mG5SfuYajNmOyAq_e-O7MbyUy5l_rmt1h8NnRcn50CGWHf-Xx3jLxmJd092-qBp70QMFEq_Q2K0SNhy0f88kXm6CGlJFrX1kVVSNx6RD2Yq6jRltyd14_frN-hpZ-SU20cXZnev3Fsbt8nQ0UvSUO6uBxgaVkTh_sD9NPw93vIcRrRWZV2uniSOZJmMByQDCIb4p8ROOppZ5dNb-PwWCDcj_e6_uiObMQIlG-0clEV5l_5jE_BUU0UtXKPURX11jk3Bg1-ob0IvDuTDqaS7lCu1VgDF0cPiFQhSUvtkdgguYiK7J7U8fbcbsgFqCC5jwuYtT1rRKbBjjN_fcCO_Xqydo_LGXcWyzqJeZTIePqvh0T8pOVtuiOGPk-C8\" target=\"_blank\"><span style=\"font-size:14px!important;width:40%;min-width:220px;max-width:290px;background-color:#2774d0;line-height:50px;display:inline-block;color:white;border-radius:1px;text-align:center\">Go to Course Dashboard</span></a></td></tr></tbody></table><div style=\"width:100%;max-width:620px;float:center;font-family:Open Sans,sans-serif;border-top:1px solid #efefef\"></div><table style=\"width:100%;max-width:620px;float:center;border-top:1px solid #efefef\"></table></td></tr></tbody></table></td></tr><tr><td colspan=\"6\" width=\"100%\" valign=\"top\" style=\"max-width:620px\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;max-width:620px;float:center;background-color:#ffffff;border:1px solid #efefef;margin-top:32px\"><tbody><tr><td colspan=\"6\" style=\"text-align:left;height:100%;padding:4% 4% 0% 4%\"><span style=\"line-height:36px;letter-spacing:.6px;color:#444444;font-size:24px;font-weight:400;padding-bottom:1%;display:block\">Download the Apps</span><p style=\"width:100%;display:inline-block\"><a href=\"https://eventing.coursera.org/redirect/pvtJex31JnTRJo4poO9TfT2fS5qhr7mJFRGi8uAlWl578B9RFl4kkg5nz1xwJn2N_U_gHeytbvguZ44KRXbqLw._nA0J3nkoG9dr13Pm_wYRw.PQ8mV-NzXCfCeKmyN-WdIdYlOH4Q84QwgczBQLI9r0cFOb_3MfDQqxJztzHXbajtPrJITXZHJCyGNmiXxxTKcwv8UA80_CXDlUuUWHx7g5ZTE6gV0ejVvn6Jl67JQP_xXKVUz-E-kjW8UzvihStVcaujvhmYFmZxVzpronl2HfmHO05vz-vw-nZq76is5lzxpfLY0N2rGf_ReItnNGymd2ZCe82Anb_UIWNisYl5ohXRwPhFAo7hdJoLA2Ac8GxE_xhLhFrARl8pXExLL6_PeScszLIWkwxLo3WfFVtfo41JzIIjXBvsfx-2yag2PgZm-Q0KWBYG8gb_622shK7uS8kIa8ZZ7mAxafxQHPtistI0XfqxZgC7WlmIzrl29nBfNE8iCwvnYo86648Vw8-MplPhhpo3H6US7iAAyZfPLbDs4PTdn2o7yMRjDOdytGxlX_lXtvd0FNIInvFEA8Vm8thaTIoUEUCEqy7M4fOdHF0QW2EQzYUe53ChnGUc9auGYagL5frV9u5ckGKR83XPyTf4FCqD5sbSTMEX34eIoVRT-bmX_IlN0dxqnnavjpiQHEoJipKsoOHP9R8JzURQe5ts4qqtMzc2njXvFH5lLJqgWIRq305qH671wtArc4n1kISyel-jZWaNIuzh4vWmih0tqB4Shd-TUBMOu34zXmk\" target=\"_blank\"><img src=\"https://ci6.googleusercontent.com/proxy/miSiVt5Mjn2v2peHN4L5nDGdPrQtS5eUTCKxGGFe3144GwFllajTsga1BsTmPrjur6uoKoXXc1ww4chiSANiSnNV6dpBmNgloTaEF2Du-FCQfvCBXEwKW_p83BoxpeNrUAyOejvnN3cNSPVi=s0-d-e1-ft#https://d2wvvaown1ul17.cloudfront.net/site-static/images/icons/download_from_apple.png\" alt=\"coursera app for iphone\" style=\"width:39.5%;float:left;border:none;max-width:100px\" class=\"CToWUd\"></a><a href=\"https://eventing.coursera.org/redirect/ECn9eOFw2KL8CNJRORWtnX4nYSYBNxBhXoO8C65_2j44ItREtpx06LC5v60Vnff1KVvQyPGbmKWYUgKzZAnmaQ.zlJUALnuW95R2amTbq_H1A.yx3581AMZvAS6woVq1NYaoY4VeyOGpZluaLUacqdabiOW1eXF677XOPX3ueW72iUCOp5YINSdl9SlJiHCwTQ6fQpcGXXbKKHZQHA-rQAQo_dtV-q2lKi2gj4lxtniQFuCtV8dEOLLhpPjZbVxWmYklQcNrvgg0LcpFeO5HUwKPColhBpODQM3oPs-mWN_Js1dCN_Mu8KaXQ_4KmfZXVB1kMof1C-1RmU5xyWwulIKixZG_LhwBCCF4sewvZby-c3wMYeXko25LW5od3cn1NClwK--Ffl6EbvYXlHK2dBb5Pa5P94BHQEbDR2VhaWAwkdxfgcsBhMbNcFlJ6b9qezZWITC03hS3zoh71uUT-uPf4yqPuMDb7gCb2Aw1DFV59o_RTtP3F2IGp4azbIhn6pO8b7mn2tIyEfK_4fd6Zrf0nWXlUeGKl5K6hk_xEdeqJR7dlRZAFGwRWnT_ie6RfKEJihjfahVu8RyF4Wxr4kBS7tQ6MSgYIBY9G6G3QscQRuLl2B6we5vJhMmvHdDwBf1xtziJoc8kEm9-CBieJjF6OCIBe-llzgk9n-KdsDPyuJvhMixhkXof6Jpc1TuOsK9BRvR-QzwLMn8vqiGafBj0p6s7mG2ZZ2fZfv4p0yZ6Slksbgh0u9Ainu2kjgLWrgmTBr8Pj-iuuQH0dd-QYmustmapTZjYFk-4uA8a-pkD3K\" target=\"_blank\"><img src=\"https://ci5.googleusercontent.com/proxy/m81aWc4qZls3v4cuzcHTwsYn7BstwbdUwguiZlpcJVHQTq7_b4ttIHdOsMR_ok_7L3fFb8WrSQqt52A4fcYF2XnvPySQ864_vLI21NwcR34Bfq2HZhLmR0SX_ST_=s0-d-e1-ft#https://coursera_assets.s3.amazonaws.com/about/mobile/badge_android.png\" alt=\"coursera for android\" style=\"width:37%;float:left;border:none;max-width:90px;padding-left:4%\" class=\"CToWUd\"></a></p></td></tr><tr><td valign=\"top\" style=\"padding:0% 0% 6% 4%;float:left;font-size:14px;line-height:1.4em;color:#787878;text-align:left\"><a href=\"https://eventing.coursera.org/redirect/AsVNSwZIpImt4mAxhmjtw4JhvzMyCde1VHDkB7HkUZY7I-mszS6L60Jxdb6rftx7GrKvlPlHTJtoxt01aFaSfQ.zW-tLYMajvAkfqusO5iccQ.HG9k7Sj3v4xTeVlNBRja3h6O8mF55Am3M9ENCsPQN4sDyAwqSiiIFF9lQ-b8eUCIOxubI1U_MT12QtvEe6b_cD0giO7DZ0qI5Wrgw2a0z6Hmkhh4DHsRnUrFJIz475HXdu_jQAE92HYnf7JPnK76eEHDnwlV_q9U9N7Clt8fvY0qdA7FD_8NDLvPn5h2eRHhpvU1cb93yzoZQQlhsYYBTgktIOID9P4Dcjaxktbebl8KiSXxYxxnjzhLGy0sO3ldwyqQzEvPUCcrMTh3N7TesWZB6pmHpWxL7VVRBDjSlOd5_gwTLOZ82vv8heW8XfAbIc4cSOYj3NeKBIluHTUw4pjGJvPeU7Tjsk_PnRBawS-PFtqXeQJN0u__uZ0SyUwjSIoGAMboG-Czbuj91MuIwbnFnOGAYOUNo3DFlxiU2469aQa0ticBeivOV0J-iB0PKIEFZ7Qs71KigSBqxYF9KSxhe2AEXlF-zzNq_ZcmAmbQUcvBwDR78-B74dMu7T9OKnzDX97G_-jfHPRMpbKB0RrWwSbf38tdBnaYl32w8cmgtfu4JmIiK5yVlr1AcoTBR3HmmzCMPQ1QUi4t9tKLZ8M5L6ynR8S-rE7Vw8U85FdW_oR6eWcNKis1JjgdEw4y\" style=\"color:#4278d3;text-decoration:none;font-size:14px\" target=\"_blank\">Learner Help Center</a>  |  Please do not reply directly to this email</td></tr><tr><td colspan=\"6\" valign=\"top\" style=\"padding:4% 4% 4% 4%;background-color:#eeeeee;font-size:14px;color:#444444;text-align:left\">Coursera sends these notifications to improve your learning experience.&nbsp;<a href=\"https://eventing.coursera.org/redirect/pNkN2LbDqL2Bz63hK0CBhRHEMzRtFhCGzvZFaJjullbiXGjorDiux2eXW6fd21X4xCSvYkxGA5CPmJOmz58M_A.nUKOvKr4FkmunVrPun-fIg.U_nIa8-09a6x2Z6pFTS97AwCvR2F1I3oIAWC3owaiw7Oyv-MKElnRcxMaaivZwQ3pUOrEsVAwjC3RPLIf3tUj3ND_pI-UHDFHUcp0-HD_wohZKQeXUHhj6M3cJ1QVqfAqa0hdvN-sWha4Mncrzl-IRh4pVOklNP9TGnJ76bjFLU_jSJTE48KRj38w8fKynQduMVA6xNrvGcFNf_cmRj04Z6Xd-GB5xO8lifmUPK6-ad6oHh0xtqtZC99Gu5ykmv-EkIuuBBJY3FRhG5dsK59CQrTOz2YRa0UAvd3USnJFI-YuW-FxhpFE2IcedGdDBfzh97R6vrRSG_ypKbk2xZ4D6WaQ4CDxZVkEV9frfxLDikSPMJ-XAijsy8-JKHDn8R8o5EDyhdg9UPpoeWoBwv6Jf93K7Di7o3F49K5GblZNEYyzpW5dXuALxChV1LepUyL5dp1qJJPfWRk9EirPQKvqMla7cLejzg6ohm_0wPA2Bl19NgW2SYBsSswVEuzques245-QN-u3r2JIffrNu2u47_i8RyLuRxXpBxd8SfShns-srz28WxQDAL-aTBO-9nRwt7N9Zc2GWF0O0k84N91-YMX6LI_Qu7n2UabBvYjdSOSXeVhr1K_5vvHKUjo0CHlLmz4SYui1OdAM_ibMLQ1MINRhRDzACYw8KYsB5TjEx4veR3VCssn_M64dpbDrbMZ1IRH3J7nReY6Q6V0OeG473bzIBJdbrERk6xbYrRKW4Cbbboe6xNarDBeUgUkbWjt7rOlFIihnuzxuJywrffLOAPym6YGNsj5-5NGtHRGlBWop9UUoGiQoogevF0x\" rel=\"nofollow\" style=\"color:#3e3e3e;text-decoration:underline\" target=\"_blank\">Unsubscribe</a></td></tr><tr><td colspan=\"6\" valign=\"top\" style=\"padding:4% 4% 4% 4%;background-color:#2d2d3b;font-size:12px;color:#d3d3d5;text-align:left\">© 2015 Coursera<br>381 E. Evelyn Ave.<br>Mountain View, CA 94041 USA</td></tr></tbody></table></td></tr></tbody></table></center><img src=\"https://ci4.googleusercontent.com/proxy/BJMXSJXKTJmTuvCVhuhai7Sh7KdpFlJtSK5-7QTV6bjrHCYCbykEdjuiB6FW-EYE-4I-igtySsW5TiRV_xUnDU_gSBT3gU0uiQBcBMNKxjt1Qbj7vW1s1Q8xhOetDbgMH02O507P-sDc6ttMXcVVfwF0_ffAv4TK3GBOssvQ3YGsshw7VE3uj02rWNFfX8k87uveXUVy9JCpzMzO7lF-cuwZuDgZyT08KN07tDFHTxmezpMAS7-Rpqg_iSKPfdQRA1hizQILUUMIEjO2Jai5q4wMHk-MLTtptNRDscKgL4OXNWo-y6gOanXOcTnZhub_Nsk0dy0hMyGWafR_V8fw0sEz4Yi1xZdaA5b_DduUbZivdG155mnuvd5GLM-2ZacdXoDhSYoyjmz7uNN01KUmwdXi_ZogKC5fSniQacRV_4tshqRvXV_qhomC34aZL0C6aEFM_XL6lPSCVT9BbFusbF2Gt9k7uxbX0V8bbCvXos6QpjjBQIrNu9yQYJx_Q-BRS2GQmYjUT2wGphvwjfOtpUyHJV08hEeBkO-N3vYLRgmkBtXxhdY8KyHkB6VRvrLptlGPsCj5SpPrwox_mRTh-bIJsEmwmG7AamLGYX9jl2rG0ERIKXIGw9WxILHVhKwAHnmFj6zJmHKuEJNiLkH1NufqAU_ipYbytJ-AIJUIeTbVb7glQ4xRg9gR5VFLlTn3uOWgc8Mri_h606c0RGR_8fHEq5k14044QOa4qsZWtGZIsXFNRDRvH1lhP5hU=s0-d-e1-ft#https://eventing.coursera.org/img/W-hj4Db_tnmFp2zyLoqHZX00nycop05ZCwUphWxS5i0B4XbbTBRPdXZAGgRqdeyUuEAr5Qt0omMEq3eD6kiH1Q.WriUmoAnbZw94ejXCOJDFw.ck5VRW46A_S2sE2b1l-xy0pq85-8NWAkLfmo7itT9A_u2hcJ64cTvv_tPzbHQ6e-RGtfn9VMGz1-MP5tKe7P3UJMZwJuCkvO4VZ397mDMT6daCsNphv7iPG0FZ_7ZUm5yHt2SnUoyoVSDQV30grP-2nwhwtPQYcpDNQ_88-cOjyxN4LsPEQeRKXMbXXzD6W6uaz3i4cAeb2i3qcqraLanHkqCfehX7yyZiCgKNJ2J-2r30BkGTElKdtZOi8PQ0qTgOAej6ec25SvNLDHkYhpDJzJy4BCsL2b7_WQvOMUnepInfFlyijtR26LZRWLcKC8T1D5EcpsoAz0vM4VbIv3Arrr9YP_VQMr5AxP-wWiuXjTaJUkI_FBI6D3wrN84BOk6OYNNSoT1dX5sn1umI9yCA\" border=\"0\" width=\"1\" height=\"1\" class=\"CToWUd\"></div></div><div class=\"yj6qo\"></div></div>";
 		$start = true;
 	}
-	
+
 
 
 	if($start) {	
@@ -237,6 +238,8 @@ class DashBoardController extends BaseController
 			'delivery_periods' => $delivery_periods,
 			'delivery_times' => $delivery_times
 		));
+		
+		return redirect()->back()->with('showmodal_change_subscribers', $showmodal_change_subscribers)->with('subscribes', $subscribes);
 	}
 
 	public function change_subscriber(Request $request, $subscribes_id, $segment_id) {
@@ -561,8 +564,9 @@ class DashBoardController extends BaseController
 		if(isset($tmp_user_site) && $tmp_user_site!=null) {
 				$subscribers_find = Subscribers::where('email', '=', $request->search)->where('segment_id', '=', $id)->first();
 		}
-		else $no_subscribers = "Подпичик не найден";
-		if(!isset($subscribers_find)) $no_subscribers = "Подпичик не найден";
+
+		else $no_subscribers = "Подписчик не найден";
+		if(!isset($subscribers_find)) $no_subscribers = "Подписчик не найден";
 
 		return redirect()->back()->with('subscribers_find', $subscribers_find)->with('not_found', $no_subscribers);
 	}
