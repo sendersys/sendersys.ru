@@ -13,7 +13,62 @@
 
                     <div class="col-md-12">
                             <div class="col-xs-12 col-md-8 add-delivery__template-container">
-
+                                <div class="delivery-template__container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <td>
+                                                    <label for="delivery-template_logo">
+                                                        <input type="file" name="delivery-template_logo" id="delivery-template_logo" class="delivery-template_logo">
+                                                        <img src="https://placehold.it/180x50" alt="">
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="title_text" value="Здравствуйте, {Имя}">
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="2">
+                                                <label for="delivery-template_logo">
+                                                    <input type="file" name="delivery-image_1" id="delivery-image_1" class="delivery-image_1">
+                                                    <img src="https://placehold.it/1000x500" alt="">
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white">
+                                            <td colspan="2" class="pd_10">
+                                                <textarea name="title_h" id="title_h" rows="2">Заголовок статьи, Заголовок статьи, Заголовок статьи...</textarea>
+                                                <a href="#" class="center">Подробнее</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="bg-white pd_10">
+                                                <label for="delivery-template_logo">
+                                                    <input type="file" name="delivery-image_1" id="delivery-image_1" class="delivery-image_1">
+                                                    <img src="https://placehold.it/1000x500" alt="">
+                                                </label>
+                                                <textarea name="title_h" id="title_h" rows="2">Заголовок статьи, Заголовок статьи, Заголовок статьи...</textarea>
+                                                <a href="#" class="center">Подробнее</a>
+                                            </td>
+                                            <td class="bg-white pd_10">
+                                                <label for="delivery-template_logo">
+                                                    <input type="file" name="delivery-image_1" id="delivery-image_1" class="delivery-image_1">
+                                                    <img src="https://placehold.it/1000x500" alt="">
+                                                </label>
+                                                <textarea name="title_h" id="title_h" rows="2">Заголовок статьи, Заголовок статьи, Заголовок статьи...</textarea>
+                                                <a href="#" class="center">Подробнее</a>
+                                            </td>
+                                        </tr>
+                                        <tr style="padding-top: 10px;">
+                                            <td class="bg-white pd_10" colspan="2">
+                                                <a href="#" class="center big">Открыть еще</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="col-xs-12 col-md-4 add-delivery__configs">
 

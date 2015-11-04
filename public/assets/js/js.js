@@ -226,7 +226,6 @@ if($('#change__logo__button').length)
         }
     });
 
-});
 
 var Tchange = {
     blocks: {
