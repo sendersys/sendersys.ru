@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c0c25a6-b3d8-4389-ab3b-e66afc8ca6ff" name="Default" comment="Изменения по рассылкам, редактирование рассылки">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/DashBoardController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashBoardController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/database.php" afterPath="$PROJECT_DIR$/config/database.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/header.blade.php" afterPath="$PROJECT_DIR$/resources/views/header.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/dashboard/header_v2.blade.php" afterPath="$PROJECT_DIR$/resources/views/dashboard/header_v2.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/js/js.js" afterPath="$PROJECT_DIR$/public/assets/js/js.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/css/main_style.css" afterPath="$PROJECT_DIR$/public/assets/css/main_style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
     </list>
     <ignored path="sendersys.ru.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -138,11 +132,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="header.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="header.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/header.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.74626863">
+            <state vertical-scroll-proportion="-11.538462">
               <caret line="103" column="5" selection-start-line="103" selection-start-column="5" selection-end-line="103" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="deployment.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/deployment.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="misc.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="3" column="10" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="modules.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.11915888">
+              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -186,6 +210,9 @@
         <option value="$PROJECT_DIR$/public/assets/js/js.js" />
         <option value="$PROJECT_DIR$/resources/views/dashboard/header_v2.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/header.blade.php" />
+        <option value="$PROJECT_DIR$/.idea/deployment.xml" />
+        <option value="$PROJECT_DIR$/.idea/misc.xml" />
+        <option value="$PROJECT_DIR$/.idea/modules.xml" />
       </list>
     </option>
   </component>
@@ -387,69 +414,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/dashboard/mailing_page.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="30" />
-          <folding>
-            <marker date="1446638371478" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/dashboard/audience_segment.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="182" column="89" selection-start-line="182" selection-start-column="20" selection-end-line="182" selection-end-column="89" />
-          <folding>
-            <marker date="1443703487000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1443703487000" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DashBoardController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="181" column="28" selection-start-line="173" selection-start-column="8" selection-end-line="181" selection-end-column="28" />
-          <folding>
-            <element signature="e#41#50#0#PHP" expanded="true" />
-            <marker date="1446639650943" expanded="true" signature="4905:4922" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="5024:5100" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="5186:5201" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="5287:5368" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="5412:5501" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="6621:6646" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="6711:6825" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="7659:7739" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="8584:8635" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="8742:8814" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="8854:8901" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="8918:9031" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="9060:9112" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="9256:9308" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="9396:9447" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="10607:10633" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="10701:10731" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="11568:11745" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="11820:11921" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="11945:12013" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="12120:12135" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="12206:12311" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="12351:12398" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="12415:12528" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="12566:12597" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="13799:13849" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="15055:15118" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="15187:15280" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="16093:16142" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="16288:16377" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="17472:17511" placeholder="..." />
-            <marker date="1446639650943" expanded="true" signature="17602:17691" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Roaming/Skype/My Skype Received Files/templates_update.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -884,8 +848,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/header.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74626863">
+        <state vertical-scroll-proportion="-11.538462">
           <caret line="103" column="5" selection-start-line="103" selection-start-column="5" selection-end-line="103" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/deployment.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="10" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11915888">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
           <folding />
         </state>
       </provider>
