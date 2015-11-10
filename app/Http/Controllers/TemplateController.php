@@ -77,6 +77,7 @@ class TemplateController extends BaseController {
             $property_array['application_block']['position'] = 'left';
 
             return view('dashboard.templates_update', array(
+                'logo_src' => isset($logo_src) ? $logo_src : NULL,
                 'property_array' => isset($property_array) ? $property_array : null,
                 'current_domen' => isset($current_domen) ? $current_domen:null,
                 'domen_clear_list' => isset($domen_clear_list) ? $domen_clear_list:null,
@@ -119,6 +120,7 @@ class TemplateController extends BaseController {
 
         if(is_object($email_template)){
             $property_array = json_decode($email_template->properties, true);
+            $logo_src = $email_template->logo_storage;
         }
         else{
             $property_array['images']['value'] = '1';
@@ -147,7 +149,7 @@ class TemplateController extends BaseController {
         }
 
         return view('dashboard.templates_update', array(
-            'logo_src' => isset($logo_src) ? $logo_src : null,
+            'logo_src' => isset($logo_src) ? $logo_src : NULL,
             'property_array' => isset($property_array) ? $property_array : null,
             'current_domen' => isset($current_domen) ? $current_domen:null,
             'domen_clear_list' => isset($domen_clear_list) ? $domen_clear_list:null,
@@ -200,7 +202,7 @@ class TemplateController extends BaseController {
         }
         if(Input::hasFile('logo_image')){
             $logo = Input::file('logo_image');
-            $logo_resize = Image::make($logo->getRealPath())->resize(600, null);
+            $logo_resize = Image::make($logo->getRealPath())->resize(180, 50);
             $email_template->logo_storage = $logo_resize->encode('data-url');
         }
 
@@ -208,7 +210,7 @@ class TemplateController extends BaseController {
         $property_json = json_encode($property_array);
         $email_template->properties = $property_json;
 
-        //TODO валидацию если необходимо
+        //TODO валидацию, если необходимо
         $email_template->save(); //сохраняем сайт
 
 

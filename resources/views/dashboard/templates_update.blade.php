@@ -14,6 +14,13 @@ $application_classes = ['left' => 'application_center', 'center' => 'application
 $inner_main_bg = isset($property_array['main_body']['style']['background']['value']) ? 'background: ' . $property_array['main_body']['style']['background']['color'] . ';' : '';
 $logo_class = $logo_classes[$property_array['logo']['position']];
 $logo_view = isset($property_array['logo']['value']) ? '' : 'display:none;';
+
+$logo_main =  '<div class="tlogo '. $logo_class. '" style="' . $logo_view . '">YOUR LOGO</div>';
+if($logo_src){
+    $logo_main = '<img class="tlogo '. $logo_class. '" src="' . $logo_src . '" style="' . $logo_view . '" />';
+}
+
+
 $full_block_view = isset($property_array['main_block']['value']) ? '' : 'display:none;';
 $images_view =  ($property_array['images']['value'] == '1') ? '' : 'display:none;';
 
@@ -68,7 +75,7 @@ $applications_gp_link =  isset($property_array['address_gp']['link']) ? $propert
 
 ?>
 <div class="template__main col-xs-12 col-md-12">
-        <?php echo Form::open(array('url' => URL::to('dashboard/templates_save', array(), true), 'method' => 'post', 'class' => 'change_template', 'files' => true)); ?>
+ <?php echo Form::open(array('url' => URL::to('dashboard/templates_save', array(), true), 'method' => 'post', 'class' => 'change_template', 'files' => true)); ?>
         <div class="inner__top row">
             <div class="templates__head col-md-4 col-xs-8">Редактирование шаблона</div>
             <a href="/dashboard/templates" class="pull-right col-md-1 col-xs-2">Закрыть</a>
@@ -77,7 +84,7 @@ $applications_gp_link =  isset($property_array['address_gp']['link']) ? $propert
             <div class="row">
                 <div class="col-xs-12 col-md-8 template__view">
                     <div class="col-md-12 col-xs-12" id="t_header" style="<?php echo $header_bg . ' ' . $header_br ?>">
-                        <div class="tlogo <?php echo $logo_class ?>" style="<?php echo $logo_view ?>">YOUR LOGO</div>
+                        <?php echo $logo_main ?>
                         <p style="<?php echo $header_title ?>"><?php echo $header_title_text ?></p>
                     </div>
 
@@ -384,5 +391,5 @@ $applications_gp_link =  isset($property_array['address_gp']['link']) ? $propert
 
 <div class="clb"></div>
 <script type="text/javascript" src="/assets/js/niceEdit.js"></script>
-
+</div>
 @include('dashboard.footer')

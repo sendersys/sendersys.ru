@@ -57,8 +57,8 @@ return [
             'host'      => env('DB_HOST', 'localhost'),
             'database'  => env('DB_DATABASE', 'sendersys'),
 
-            'username'  => env('DB_USERNAME', 'sendersys'),
-            'password'  => env('DB_PASSWORD', 'sZc7XSchsYzjbV6C'),
+            'username'  => env('DB_USERNAME', 'root'),
+            'password'  => env('DB_PASSWORD', ''),
             'charset'   => 'utf8',
             'collation' => 'utf8_general_ci',
             'prefix'    => '',

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -148,6 +148,7 @@ return [
         'Laravel\Socialite\SocialiteServiceProvider',
         'SocialiteProviders\Manager\ServiceProvider',
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        'Spatie\Backup\BackupServiceProvider',
 
 
     ],

@@ -2123,6 +2123,13 @@ margin-top: 16px;
     float: left;
 }
 
+img.tlogo{
+    margin: 20px 0;
+    background: none;
+    float: left;
+    padding: 0;
+}
+
 #full_block {
     margin-top: 5px;
     text-align: center;
@@ -2305,17 +2312,17 @@ margin-top: 16px;
 }
 
 .tlogo_right{
-    float: right;
+    float: right !important;
 }
 
 .tlogo_left{
-    float: left;
+    float: left !important;
 }
 
 .tlogo_center{
     position: relative;
     margin: 20px auto;
-    float: none;
+    float: none !important;
 }
 
 .tlogo_center p{

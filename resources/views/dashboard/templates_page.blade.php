@@ -115,5 +115,5 @@ $applications_gp_link =  isset($property_array['address_gp']['link']) ? $propert
         <div class="clb"></div>
     </div>
 </div>
-
+</div>
 @include('dashboard.footer')

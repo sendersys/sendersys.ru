@@ -14,7 +14,8 @@
 		"guzzlehttp/guzzle": "~5.0|~6.0",
 		"league/oauth1-client": "~1.0",
         "socialiteproviders/vkontakte": "^1.1",
-        "barryvdh/laravel-ide-helper": "^2.1"
+        "barryvdh/laravel-ide-helper": "^2.1",
+        "spatie/laravel-backup": "^2.8"
     },
     
     "require-dev": {
