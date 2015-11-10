@@ -24,7 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
+        $schedule->command('inspire')->hourly();
+        $schedule->command('backup:run')->daily();
+        $schedule->command('backup:clean')->daily();
     }
+    //* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1 добавить в крон
 }
