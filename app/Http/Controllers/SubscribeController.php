@@ -11,18 +11,10 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Users;
-use App\Models\Users_site;
-use App\Models\Email_templates;
-use App\Models\Content_category;
-use App\Models\Content_type;
-use App\Models\Users_site2content;
+
 use App\Models\Subscribers;
 use App\Models\Subscriber_hash;
-use App\Models\Segment;
-use App\Models\Subscriber_status;
-use App\Models\Mailing_list;
-use Cookie;
-use Crypt;
+
 
 
 class SubscribeController extends BaseController {
@@ -33,6 +25,7 @@ class SubscribeController extends BaseController {
             $subscriber_hash = Subscriber_hash::where(['hash' => $hash])->get()->first();
             if(is_object($subscriber_hash)){
                 $subscriber = Subscribers::where(['id' => $subscriber_hash->id])->get()->first();
+                $logSubscribers = (new SubscriberLogController)->createLog('change_status', ['segment_id' => $subscriber->segment_id, 'subscriber_id' => $subscriber->id, 'params' => 8]);
                 $subscriber->status_id = 8;
                 if($subscriber->save()){
                     $subscriber_hash->delete();

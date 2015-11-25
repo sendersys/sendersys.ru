@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
 use App\Users;
 use App\Models\Users_site;
 use App\Models\Content_category;
@@ -20,6 +21,7 @@ use App\Models\Subscribers;
 use App\Models\Segment;
 use App\Models\Subscriber_status;
 use App\Models\Mailing_list;
+use App\Models\Log_subscribers;
 use Cookie;
 use Crypt;
 
@@ -121,7 +123,7 @@ class CSV {
 }
 
 
-class DashBoardController extends BaseController 
+class DashBoardController extends BaseController
 {
 	public function get_subscriber(Request $request, $subscribes_id, $segment_id) {
 		$user_name = Auth::user();
@@ -260,6 +262,7 @@ class DashBoardController extends BaseController
 					 $subscribes->age = $request['age'];
 					 $subscribes->city = $request['city'];
 					 $subscribes->save();
+					 $logSubscribers = (new SubscriberLogController)->createLog('change_data', ['segment_id' => $segment_id, 'subscriber_id' => $subscribes->id]);
 				}
 				else {
 					$validator = Validator::make(
@@ -295,6 +298,7 @@ class DashBoardController extends BaseController
 						$subscribes->city = $request['city'];
 						$subscribes->email = $request['email'];
 						$subscribes->save();
+						$logSubscribers = (new SubscriberLogController)->createLog('change_data', ['segment_id' => $segment_id, 'subscriber_id' => $subscribes->id]);
 					}
 				}
 		}
@@ -314,6 +318,7 @@ class DashBoardController extends BaseController
 			$user_site = Users_site::where('id', '=', $tmp_segment['domen_id'])->where('user_id', '=',  $user_name['id'])->get();
 		}
 		if($user_site) {
+			$logSubscribers = (new SubscriberLogController)->createLog('delete', ['segment_id' => $segment_id, 'subscriber_id' => $subscribes->id]);
 			$subscribes->delete();
 		}
 		return redirect()->back();
@@ -384,7 +389,7 @@ class DashBoardController extends BaseController
 	public function add_audience_file(Request $request) {
 			
 			$user_name = Auth::user();
-			$domen_id = null;
+			$domen_id = NULL;
 			$current_domen_cookie = $request->cookie('current_domen');
 
 			if(isset($current_domen_cookie)) {	
@@ -399,7 +404,7 @@ class DashBoardController extends BaseController
 
 
 			$new_file_tmp = $request->files; //получаем прикрепленный файл из запроса
-			$new_file;
+			$new_file = NULL;
 			foreach ($new_file_tmp as $key => $value) {
 				$new_file = $value;
 			}
@@ -430,20 +435,21 @@ class DashBoardController extends BaseController
 					    foreach ($get_csv as $value) { //Проходим по строкам и загружаем в модель, подсчитваем брак и пишем в лог
 						        // dd($value);
 						        if(count($value)==6) {
-
 						        	$exists_email = Subscribers::where('segment_id', '=', $segment_id)->where('email', '=', $value[0])->first();
 						        	if(!$exists_email) {//существует ли в сегменте такой e-mail и есть ли у подписчика email, если да то пропускаем и к следующему элементу
-							        $subscriber = new Subscribers;
-							        $subscriber->email = $value[0]; //email
-						      		$subscriber->name = $value[1]; //имя
-							        $subscriber->surname = $value[2]; //фамилия
-							        $subscriber->sex = $value[3]; //пол
-							    	$subscriber->age = $value[4]; //возраст
-							    	$subscriber->city = $value[5]; //город
-							    	$subscriber->status_id = 1; // статус 1 - Исходный пользователь
-							    	$subscriber->segment_id = $segment_id;
-							    	$subscriber->save();
-							    	$count_str++; 
+										$subscriber = new Subscribers;
+										$subscriber->email = $value[0]; //email
+										$subscriber->name = $value[1]; //имя
+										$subscriber->surname = $value[2]; //фамилия
+										$subscriber->sex = $value[3]; //пол
+										$subscriber->age = $value[4]; //возраст
+										$subscriber->city = $value[5]; //город
+										$subscriber->status_id = 1; // статус 1 - Исходный пользователь
+										$subscriber->segment_id = $segment_id;
+										$subscriber->save();
+										$count_str++;
+
+										$logSubscribers = (new SubscriberLogController)->createLog('add', ['segment_id' => $segment_id, 'subscriber_email' => $value[0]]);
 							    	}
 							    	else {
 							    		continue; 
@@ -455,7 +461,6 @@ class DashBoardController extends BaseController
 					    }
 					    
 					}
-
 					
 					catch (Exception $e) { //Если csv файл не существует, выводим сообщение
 					    echo "Ошибка: " . $e->getMessage();
@@ -465,7 +470,47 @@ class DashBoardController extends BaseController
 
 			else if(pathinfo($new_file->getClientOriginalName())['extension']=='txt')
 			{
-				
+				$file_content = file($new_file);
+
+				$exists_segment = Segment::where('domen_id', '=', $domen_id)->where('segment_name', 'LIKE', $request->name)->first();
+
+				if(!$exists_segment['segment_name']) { //проверка на существование сегмента для этого сайта
+					$segment = new Segment;
+					$segment->segment_name = $request->name;
+					$segment->domen_id = $domen_id;
+					$segment->save();
+				}
+
+				$segment_id = Segment::where('domen_id', '=', $domen_id)->where('segment_name', 'LIKE', $request->name)->first()->id;
+
+				$count_str = 1;
+				foreach($file_content as $row){
+					$subcriber_info = explode(';', $row);
+					if(count($subcriber_info)==6) {
+						$exists_email = Subscribers::where('segment_id', '=', $segment_id)->where('email', '=', $subcriber_info[0])->first();
+						if(!$exists_email) {//существует ли в сегменте такой e-mail и есть ли у подписчика email, если да то пропускаем и к следующему элементу
+							$subscriber = new Subscribers;
+							$subscriber->email = $subcriber_info[0]; //email
+							$subscriber->name = $subcriber_info[1]; //имя
+							$subscriber->surname = $subcriber_info[2]; //фамилия
+							$subscriber->sex = $subcriber_info[3]; //пол
+							$subscriber->age = $subcriber_info[4]; //возраст
+							$subscriber->city = $subcriber_info[5]; //город
+							$subscriber->status_id = 1; // статус 1 - Исходный пользователь
+							$subscriber->segment_id = $segment_id;
+							$subscriber->save();
+							$count_str++;
+
+							$logSubscribers = (new SubscriberLogController)->createLog('add', ['segment_id' => $segment_id, 'subscriber_email' => $subcriber_info[0]]);
+						}
+						else {
+							continue;
+						}
+					}
+					else {
+						return redirect()->back()->with('error_message_save', 'Операция завершена с ошибками на '.print_r($subcriber_info).' строке. Столбцов должно быть 6');
+					}
+				}
 			}
 		}
 		//и редирект на главную = аудиторию
@@ -541,7 +586,9 @@ class DashBoardController extends BaseController
 		
 		if(isset($tmp_user_site)) {
 			$delete_subscribers = Subscribers::where('segment_id', '=', $id)->get();
+
 			foreach ($delete_subscribers as $value) {
+				$logSubscribers = (new SubscriberLogController)->createLog('delete', ['segment_id' => $id, 'subscriber_id' => $value->id]);
 				$value->delete();
 			}
 
@@ -656,11 +703,12 @@ class DashBoardController extends BaseController
 
 		            }  
 		        }
+
 				/*=============================================================*/
 
 		return view('dashboard.widget_page', array(
 			'current_domen' => isset($current_domen) ? $current_domen:null,
-			'domen_clear_list' => isset($domen_clear_list) ? $domen_clear_list:null,
+			'domen_clear_listakkpRqi8la' => isset($domen_clear_list) ? $domen_clear_list:null,
 			'content_category' => isset($content_category) ? $content_category:null,
 			'content_type' => isset($content_type) ? $content_type:null,
 			'user_name' => isset($user_name) ? $user_name:null

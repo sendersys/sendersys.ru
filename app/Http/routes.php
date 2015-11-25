@@ -51,7 +51,9 @@ Route::any('/dashboard/mailing', ['as'=> 'mailing.main', 'middleware' => 'auth',
 Route::any('/dashboard/templates', ['middleware' => 'auth', 'uses'=> 'TemplateController@show_template']); //шаблоны
 Route::any('/dashboard/templates_update', ['middleware' => 'auth', 'uses'=> 'TemplateController@change_template']); //редактирование шаблона
 Route::any('/dashboard/templates_save', ['middleware' => 'auth', 'uses'=> 'TemplateController@save_template']); //Сохранение шаблона
-Route::any('/unsubscribe/', 'SubscribeController@unsubscribe'); //Сохранение шаблона
+Route::any('/unsubscribe/', 'SubscribeController@unsubscribe'); //Отписка подписчика
+Route::any('/redirectlink/', 'StatusController@openLinks'); //Переходы с писем
+Route::any('/scounter/', 'StatusController@openLetter'); //Переходы с писем
 
 
 Route::get('email', 'UserController@email'); //тестовая страница
