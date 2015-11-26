@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Crowded_emails;
+use App\Models\Segment;
 use Auth;
 use Input;
 use Validator;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\File;
 use App\Users;
 
 use App\Models\Subscribers;
+use App\Models\Log_subscribers;
 use App\Models\Subscriber_link;
 
 
@@ -33,7 +35,9 @@ class StatusController extends Controller {
         if ($uid && $campaign_id){
             $subscriber = Subscribers::where(['id' => $uid])->get()->first();
             $logSubscribers = (new SubscriberLogController)->createLog('change_status', ['segment_id' => $subscriber->segment_id, 'subscriber_id' => $subscriber->id, 'params' => 5]);
-            $subscriber->status_id = 5;
+            if($subscriber->status_id != 8) {
+                $subscriber->status_id = 5;
+            }
 
             $image_path = 'https://sendersys.ru/images/s_counter.gif';
 
@@ -79,11 +83,13 @@ class StatusController extends Controller {
             $redirect = Subscriber_link::where(['link_hash' => $link_hash,'campaign_id' => $campaign_id, 'subscriber_id' => $subscriber_id])->get()->first();
             if(is_object($redirect)){
                 $subscriber = Subscribers::where(['id' => $redirect->subscriber_id])->get()->first();
-                $logSubscribers = (new SubscriberLogController)->createLog('change_status', ['segment_id' => $subscriber->segment_id, 'subscriber_id' => $subscriber->id, 'params' => 6]);
-                $subscriber->status_id = 6;
-                if($subscriber->save()){
-                    $redirect_link = $redirect->redirect_link;
-                    return redirect()->away($redirect_link);
+                if($subscriber->status_id != 8) {
+                    $subscriber->status_id = 6;
+                    $logSubscribers = (new SubscriberLogController)->createLog('change_status', ['segment_id' => $subscriber->segment_id, 'subscriber_id' => $subscriber->id, 'params' => 6]);
+                    if($subscriber->save()){
+                        $redirect_link = $redirect->redirect_link;
+                        return redirect()->away($redirect_link);
+                    }
                 }
             }
             return redirect('/');
@@ -124,11 +130,12 @@ class StatusController extends Controller {
                     else if(is_object($crowded) && ($time -  strtotime($crowded->created_at)) > 7776000){
                         $subscribers = Subscribers::where(['email' => $email])->get();
                         if(is_object($subscribers)){
-                            foreach ($subscribers as $subscriber)
-                            {
-                                $subscriber->status_id = 10;
-                                $subscriber->save();
-                                $logSubscribers = (new SubscriberLogController)->createLog('change_status', ['segment_id' => $subscriber->segment_id, 'subscriber_id' => $subscriber->id, 'params' => 10]);
+                            foreach ($subscribers as $subscriber){
+                                if($subscriber->status_id != 8) {
+                                    $subscriber->status_id = 10;
+                                    $subscriber->save();
+                                    $logSubscribers = (new SubscriberLogController)->createLog('change_status', ['segment_id' => $subscriber->segment_id, 'subscriber_id' => $subscriber->id, 'params' => 10]);
+                                }
                             }
                         }
                     }
@@ -151,11 +158,13 @@ class StatusController extends Controller {
                     {
                         $subscribers = Subscribers::where(['email' => $email])->get();
                         if(is_object($subscribers)){
-                            foreach ($subscribers as $subscriber)
-                            {
-                                $subscriber->status_id = 11;
-                                $subscriber->save();
-                                $logSubscribers = (new SubscriberLogController)->createLog('change_status', ['segment_id' => $subscriber->segment_id, 'subscriber_id' => $subscriber->id, 'params' => 11]);
+                            foreach ($subscribers as $subscriber){
+                                if($subscriber->status_id != 8) {
+                                    $subscriber->status_id = 11;
+                                    $subscriber->save();
+                                    $logSubscribers = (new SubscriberLogController)->createLog('change_status', ['segment_id' => $subscriber->segment_id, 'subscriber_id' => $subscriber->id, 'params' => 11]);
+
+                                }
                             }
                         }
                     }
@@ -163,5 +172,27 @@ class StatusController extends Controller {
             }
         }
         fclose($handle);
+    }
+
+    function noActiveUsers(){
+        $segments = Segment::all();
+        foreach($segments as $segment){
+            $subscribers = Subscribers::where(['segment_id' => $segment->id])->get();
+            foreach ($subscribers as $subscriber){
+               if($subscriber->status_id != 8) {
+                    $log_subscriber = Log_subscribers::where(['subscriber_id' => $subscriber->id])->orderBy('id', 'desc')->get()->first();
+                    if(is_object($log_subscriber)) {
+                        $log_date = $log_subscriber->created_at;
+                        $current_time = time();
+                        if ($current_time - strtotime($log_date) > 7776000) {
+                            $subscriber->status_id = 11;
+                            $subscriber->save();
+                            $logSubscribers = (new SubscriberLogController)->createLog('change_status', ['segment_id' => $subscriber->segment_id, 'subscriber_id' => $subscriber->id, 'params' => 11]);
+                        }
+
+                    }
+               }
+            }
+        }
     }
 }
