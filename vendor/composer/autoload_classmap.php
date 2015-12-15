@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddSubjectFromMailingTable' => $baseDir . '/database/migrations/2015_10_27_193802_add_subject_from_mailing_table.php',
+    'BlackList' => $baseDir . '/database/migrations/2015_12_12_125244_black_list.php',
     'ChangeSubscriberStatusTable' => $baseDir . '/database/migrations/2015_08_30_124911_change_subscriber_status_table.php',
     'ChangeSubscriberStatusTableAddDesc' => $baseDir . '/database/migrations/2015_08_30_125523_change_subscriber_status_table_add_desc.php',
     'CreateAdministratorsTable' => $baseDir . '/database/migrations/2014_10_12_104748_create_administrators_table.php',
@@ -532,5 +533,6 @@ return array(
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'UpgradeUsersSite' => $baseDir . '/database/migrations/2015_12_15_061749_upgrade_users_site.php',
     'UsersSocial' => $baseDir . '/database/migrations/2015_07_17_005035_users_social.php',
 );

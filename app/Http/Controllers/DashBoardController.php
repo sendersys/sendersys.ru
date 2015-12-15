@@ -19,6 +19,7 @@ use App\Models\Content_type;
 use App\Models\Users_site2content;
 use App\Models\Subscribers;
 use App\Models\Segment;
+use App\Models\Black_list;
 use App\Models\Subscriber_status;
 use App\Models\Mailing_list;
 use App\Models\Log_subscribers;
@@ -387,10 +388,12 @@ class DashBoardController extends BaseController
 
 
 	public function add_audience_file(Request $request) {
-			
+
 			$user_name = Auth::user();
 			$domen_id = NULL;
 			$current_domen_cookie = $request->cookie('current_domen');
+			$error_message_save = null; //сообщение об ошибке
+			$count_str = 1;
 
 			if(isset($current_domen_cookie)) {	
 				foreach ($current_domen_cookie as $current_site) {
@@ -412,7 +415,7 @@ class DashBoardController extends BaseController
 				if(pathinfo($new_file->getClientOriginalName())['extension']=='csv') { //проверка если это csv или это txt			
 
 					try {
-						$error_message_save = null; //сообщение об ошибке
+
 					    $csv = new CSV($new_file); //Открываем наш csv
 					    /**
 					     * Чтение из CSV  (и вывод на экран в красивом виде)
@@ -431,12 +434,12 @@ class DashBoardController extends BaseController
 						$segment_id = Segment::where('domen_id', '=', $domen_id)->where('segment_name', 'LIKE', $request->name)->first()->id;
 						
 						// else if(){}
-					    $count_str = 1; //добавить проверку на емаил если уже есть такой то пропустить строку, для этого надо сделать запрос и добавить сегмент
+					  	 //добавить проверку на емаил если уже есть такой то пропустить строку, для этого надо сделать запрос и добавить сегмент
 					    foreach ($get_csv as $value) { //Проходим по строкам и загружаем в модель, подсчитваем брак и пишем в лог
 						        // dd($value);
 						        if(count($value)==6) {
-						        	$exists_email = Subscribers::where('segment_id', '=', $segment_id)->where('email', '=', $value[0])->first();
-						        	if(!$exists_email) {//существует ли в сегменте такой e-mail и есть ли у подписчика email, если да то пропускаем и к следующему элементу
+									$exists_email = $this->checkEmail($value[0], $segment_id);
+									if($exists_email['success']) {//существует ли в сегменте такой e-mail и есть ли у подписчика email, если да то пропускаем и к следующему элементу
 										$subscriber = new Subscribers;
 										$subscriber->email = $value[0]; //email
 										$subscriber->name = $value[1]; //имя
@@ -448,10 +451,10 @@ class DashBoardController extends BaseController
 										$subscriber->segment_id = $segment_id;
 										$subscriber->save();
 										$count_str++;
-
 										$logSubscribers = (new SubscriberLogController)->createLog('add', ['segment_id' => $segment_id, 'subscriber_email' => $value[0]]);
 							    	}
 							    	else {
+										$error_message_save .= $exists_email['error'] . '<br/>';
 							    		continue; 
 							    	}
 				    			}
@@ -483,12 +486,12 @@ class DashBoardController extends BaseController
 
 				$segment_id = Segment::where('domen_id', '=', $domen_id)->where('segment_name', 'LIKE', $request->name)->first()->id;
 
-				$count_str = 1;
+
 				foreach($file_content as $row){
 					$subcriber_info = explode(';', $row);
-					if(count($subcriber_info)==6) {
-						$exists_email = Subscribers::where('segment_id', '=', $segment_id)->where('email', '=', $subcriber_info[0])->first();
-						if(!$exists_email) {//существует ли в сегменте такой e-mail и есть ли у подписчика email, если да то пропускаем и к следующему элементу
+					if(count($subcriber_info) == 6) {
+						$exists_email = $this->checkEmail($subcriber_info[0], $segment_id);
+						if($exists_email['success']) {//существует ли в сегменте такой e-mail и есть ли у подписчика email, если да то пропускаем и к следующему элементу
 							$subscriber = new Subscribers;
 							$subscriber->email = $subcriber_info[0]; //email
 							$subscriber->name = $subcriber_info[1]; //имя
@@ -500,10 +503,10 @@ class DashBoardController extends BaseController
 							$subscriber->segment_id = $segment_id;
 							$subscriber->save();
 							$count_str++;
-
 							$logSubscribers = (new SubscriberLogController)->createLog('add', ['segment_id' => $segment_id, 'subscriber_email' => $subcriber_info[0]]);
 						}
 						else {
+							$error_message_save .= $exists_email['error'] . '<br/>';
 							continue;
 						}
 					}
@@ -513,17 +516,25 @@ class DashBoardController extends BaseController
 				}
 			}
 		}
+
+		//Отправка уведомления
+		if($count_str > 1){
+			$to  = '<example@mail.ru>';
+			$subject = "Добавление большого количества подписчиков;";
+			$message = 'Пользователь ' . $user_name->username . ' (id ' . $user_name->id . ') добавил в сегмент ' . $request->name .  ' ' . ($count_str-1) . ' подписчиков';
+			$mailheaders = "Content-type: text/html; UTF-8 \r\n";
+			$mailheaders .= "From: no-reply@sendersys.ru";
+			mail($to, $subject, $message, $mailheaders);
+		}
+
+
 		//и редирект на главную = аудиторию
 		/*=============================================================*/
 				
-				
 				$content_category = Content_category::all();
 				$content_type = Content_type::all();
-				
 				$current_domen = Users_site::where('id', '=', $domen_id)->get();
-				
 				$domen_list = Users_site::where('user_id', '=', $user_name['id'])->get();
-
 				$domen_clear_list = null;
 				$ready_site_name = null;
 				if(isset($domen_list)) { //очищаем данные, чтобы уменьшить размер куки, берем только имя + id
@@ -539,7 +550,6 @@ class DashBoardController extends BaseController
 
 		        // $segment = Segment::where('domen_id', '=', $domen_id)->get();
 				/*=============================================================*/
-
 		return view('dashboard', array(
 			'current_domen' => isset($current_domen) ? $current_domen:null,
 			'domen_clear_list' => isset($domen_clear_list) ? $domen_clear_list:null,
@@ -550,6 +560,62 @@ class DashBoardController extends BaseController
 			// 'segment' => isset($segment) ? $segment:null
 			));
 	}
+
+	protected function checkEmail($email, $segment_id){
+		$result = [];
+		$result['success'] = false;
+		$alias_domens = ['ya.ru' => 'yandex.ru', 'yandex.ru' => 'ya.ru'];
+		$exists_email1 = $exists_email2 = NULL;
+		$user   = '[a-zA-Z0-9_\-\.\+\^!#\$%&*+\/\=\?\`\|\{\}~\']+';
+		$domain = '(?:(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.?)+';
+		$ipv4   = '[0-9]{1,3}(\.[0-9]{1,3}){3}';
+		$ipv6   = '[0-9a-fA-F]{1,4}(\:[0-9a-fA-F]{1,4}){7}';
+
+		//проверка на наличие bom
+		if(substr($email, 0, 3) == pack('CCC', 0xef, 0xbb, 0xbf)) {
+			$email = substr($email, 3);
+		}
+		preg_match("/^$user@($domain|(\[($ipv4|$ipv6)\]))$/", $email, $matches);
+
+
+		if($matches){
+			if ($url = $this->check_url($matches[1])){
+				// ссылка корректная
+				if ($o = $this->open_url($url)){
+
+					$exists_email1 = Subscribers::where('segment_id', '=', $segment_id)->where('email', '=', $email)->first();
+					if(isset($alias_domens[$matches[1]])){
+						$email2 = str_replace($matches[1], $alias_domens[$matches[1]], $email);
+						$exists_email2 = Subscribers::where('segment_id', '=', $segment_id)->where('email', '=', $email2)->first();
+					}
+
+
+					if(!$exists_email1 && !$exists_email2) {
+						$black_list = Black_list::where('email', '=', $email)->first();
+						if(!$black_list) {
+							$result['success'] = true;
+						}
+						else{
+							$result['error'] = "Данный email <strong>" . $email . "</strong> находится в черном списке";
+						}
+					}
+					else{
+						$result['error'] = "Данный email <strong>" . $email . "</strong> уже есть в данном сегменте";
+					}
+				}
+				else{
+					$result['error'] = "Домен email <strong>" . $email . "</strong> не отвечает на запрос";
+				}
+			}
+			else $result['error'] = "Домен <strong>" . $email . "</strong> отсутствует";
+		}
+		else{
+			$result['error'] = "Email <strong>" . $email . "</strong> Не соответствует стандартам RFC";
+		}
+		return $result;
+	}
+
+
 
 	public function mailru() { //для подтверждения
 		return view('mailru-domain');
@@ -607,7 +673,7 @@ class DashBoardController extends BaseController
 		if(isset($tmp_segment) && $tmp_segment!=null) {
 			$tmp_user_site = Users_site::where('id', '=', $tmp_segment['domen_id'])->where('user_id', '=',  $user_name['id'])->get();
 		}
-		   else $no_subscribers = "Подпичик не найден";
+		   else $no_subscribers = "Подпиcчик не найден";
 		if(isset($tmp_user_site) && $tmp_user_site!=null) {
 				$subscribers_find = Subscribers::where('email', '=', $request->search)->where('segment_id', '=', $id)->first();
 		}
@@ -927,13 +993,11 @@ class DashBoardController extends BaseController
 					$default_domen = Users_site::where('user_id', '=', $user_name['id'])->first();
 					$domen_id = $default_domen->id;
 				}
-
 				
 				$content_category = Content_category::all();
 				$content_type = Content_type::all();
 				
 				$current_domen = Users_site::where('id', '=', $domen_id)->get();
-				
 				$domen_list = Users_site::where('user_id', '=', $user_name['id'])->get();
 
 				$domen_clear_list = null;
@@ -951,11 +1015,11 @@ class DashBoardController extends BaseController
 		/*=============================================================*/
 
         return view('dashboard.templates_page', array(
-			'current_domen' => isset($current_domen) ? $current_domen:null,
-			'domen_clear_list' => isset($domen_clear_list) ? $domen_clear_list:null,
-			'content_category' => isset($content_category) ? $content_category:null,
-			'content_type' => isset($content_type) ? $content_type:null,
-			'user_name' => isset($user_name) ? $user_name:null
+				'current_domen' => isset($current_domen) ? $current_domen:null,
+				'domen_clear_list' => isset($domen_clear_list) ? $domen_clear_list:null,
+				'content_category' => isset($content_category) ? $content_category:null,
+				'content_type' => isset($content_type) ? $content_type:null,
+				'user_name' => isset($user_name) ? $user_name:null
 			));
 
 	}
@@ -970,6 +1034,7 @@ class DashBoardController extends BaseController
 		$user_site->user_id = $user_name['id'];
 		$user_site->visitor = $addsite_input['visitor'];
 		$user_site->base_size = $addsite_input['base'];
+		$user_site->confirm_hash = substr(md5($addsite_input['domen'] . $user_name['id'] . rand(0, 10000)), 0, 12);
 
 
 		$validators = Validator::make(
@@ -999,41 +1064,14 @@ class DashBoardController extends BaseController
 			);
 
 
-			// Корректность ссылки (URL)
-			function check_url($url)
-			{
-			  
-				if (!strstr($url,"://"))
-				  {
-				    $url="http://".$url;
-				  }
-			 	if (preg_match('~^(http|https)://([A-Z0-9][A-Z0-9_-]*(?:.[A-Z0-9][A-Z0-9_-]*)+):?(d+)?/?~i', $url)) {
-		   		  return $url;
-			  	}
-			  return false;
-			}
-			 // Существование ссылки (URL)
-			function open_url($url)
-			{
-			 $url_c=parse_url($url);
-			 
-			  if (!empty($url_c['host']) and checkdnsrr($url_c['host']))
-			  {
-			    // Ответ сервера
-			    if ($otvet=@get_headers($url)){
-			      return substr($otvet[0], 9, 3);
-			    }
-			  }
-			  return false;     
-			}
+
 			$domen_check = "";
 			// Проверка ссылки
 			$url = $addsite_input['domen'];
 			
-			if ($url=check_url($url))
-			{
+			if ($url = $this->check_url($url)){
 			  // ссылка корректная
-			  if ($o=open_url($url))
+			  if ($o = $this->open_url($url))
 			  {
 			    $domen_check = 'ok';
 			  }
@@ -1094,8 +1132,35 @@ class DashBoardController extends BaseController
 		            }  
 		        }
 
-				return redirect('dashboard/add_audience')->withCookie('current_domen', $current_domen)->withCookie('user_name', $user_name)->withCookie('domen_clear_list', $domen_clear_list);
+				return redirect('dashboard/audience')->withCookie('current_domen', $current_domen)->withCookie('user_name', $user_name)->withCookie('domen_clear_list', $domen_clear_list);
 			}
 
+	}
+
+
+	// Корректность ссылки (URL)
+	protected function check_url($url){
+
+		if (!strstr($url,"://"))
+		{
+			$url = "http://".$url;
+		}
+		if (preg_match('~^(http|https)://([A-Z0-9][A-Z0-9_-]*(?:.[A-Z0-9][A-Z0-9_-]*)+):?(d+)?/?~i', $url)) {
+			return $url;
+		}
+		return false;
+	}
+	// Существование ссылки (URL)
+	protected function open_url($url){
+		$url_c = parse_url($url);
+
+		if (!empty($url_c['host']) and checkdnsrr($url_c['host']))
+		{
+			// Ответ сервера
+			if ($otvet=@get_headers($url)){
+				return substr($otvet[0], 9, 3);
+			}
+		}
+		return false;
 	}
 }

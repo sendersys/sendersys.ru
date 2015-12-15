@@ -16,4 +16,9 @@
  */
 
 
-Admin::menu()->url('/')->label('Start page')->icon('fa-dashboard')->uses('\SleepingOwl\Admin\Controllers\DummyController@getIndex');
+Admin::menu()->url('/')->label('Главная')->icon('fa-dashboard')->uses('\SleepingOwl\Admin\Controllers\DummyController@getIndex');
+Admin::menu('App\Models\Black_list')->icon('fa-file-text');
+Admin::menu('App\User')->icon('fa-users');
+Admin::menu('App\Models\Users_site')->icon('fa-tags');
+Admin::menu('App\Models\Segment')->icon('fa-bars');
+Admin::menu()->url('#')->label('Главная страница')->icon('fa-home');

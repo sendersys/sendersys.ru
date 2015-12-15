@@ -54,6 +54,7 @@ Route::any('/dashboard/templates_save', ['middleware' => 'auth', 'uses'=> 'Templ
 Route::any('/unsubscribe/', 'SubscribeController@unsubscribe'); //Отписка подписчика
 Route::any('/redirectlink/', 'StatusController@openLinks'); //Переходы с писем
 Route::any('/scounter/', 'StatusController@openLetter'); //Переходы с писем
+Route::any('/domen_confirm/', 'DomenConfirmController@confirm'); //Переходы с писем
 
 
 Route::get('email', 'UserController@email'); //тестовая страница

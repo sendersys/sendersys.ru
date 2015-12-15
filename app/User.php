@@ -34,6 +34,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
 
+    public function user_sites()
+    {
+        return $this->hasMany('App\Models\Users_site');
+    }
+
+
     public function signup(){
         $this -> password = \Hash::make($this->password);
         return $this -> save();

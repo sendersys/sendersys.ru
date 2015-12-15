@@ -50,7 +50,8 @@ $current_segment = Request::cookie('current_segment');
                             echo '<td class="audience__segment__cell">';
                          	echo '<p class="audience__segment">'.$value->segment_name.'</p>'; 
                          	if(isset($error_message_save)) echo $error_message_save;
-                         } 
+                         	if(isset($errors_after_load)) echo $errors_after_load;
+                         }
                          else {
                          	echo "<tr class=\"audience__segment__row\">";
                          	echo '<td class="audience__segment__cell">';

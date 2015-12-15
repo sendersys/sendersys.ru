@@ -134,7 +134,21 @@ a:hover, a:focus {
   font-size: 23px;
   background-color: white;
   background-image: none;
-  margin-top: 100px;
+  margin-top: 85px;
+}
+
+.want_error_page {
+  width: 255px;
+  color: #d50070;
+  font-family: Arial;
+  font-size: 23px;
+  background-color: white;
+  background-image: none;
+  margin-top: 20px;
+}
+
+.want_first{
+    margin-top: 100px;
 }
 
 .howwork {
@@ -2528,4 +2542,37 @@ span.select__description{
 .change_logo_position input[type=radio] {
     position: relative !important;
     opacity: 1 !important;
+}
+
+.error_page_big{
+    color: #d6d6d6;
+    font-family: Arial;
+    font-size: 110px;
+    margin-top: 65px;
+    font-weight: bold;
+    line-height: 1.10;
+}
+
+footer.error_page{
+    margin-top: 0;
+}
+
+.nt {
+    color: #2f6f9f;
+}
+
+.na {
+    color: #4f9fcf;
+}
+
+.s {
+    color: #d44950;
+}
+
+.confirm_desc{
+    color: #d50070;
+    padding-top: 0px;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 15px;
 }

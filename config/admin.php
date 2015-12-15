@@ -5,7 +5,7 @@ return [
 	 * Admin title
 	 * Displays in page title and header
 	 */
-	'title'                 => 'Senersys Admin',
+	'title'                 => 'Sendersys Admin',
 
 	/*
 	 * Admin url prefix
