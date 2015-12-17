@@ -2,6 +2,12 @@
 
 All Notable changes to `laravel-backup` will be documented in this file
 
+###2.8.3
+- Further improve the clean up of temporary files.
+
+###2.8.2
+- Improve the clean up of temporary files.
+
 ###2.8.1
 - Fixed determining the driver of the database.
 

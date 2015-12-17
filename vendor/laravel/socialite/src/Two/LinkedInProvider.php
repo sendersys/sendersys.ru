@@ -1,8 +1,9 @@
-<?php namespace Laravel\Socialite\Two;
+<?php
+
+namespace Laravel\Socialite\Two;
 
 class LinkedInProvider extends AbstractProvider implements ProviderInterface
 {
-
     /**
      * The scopes being requested.
      *
@@ -60,7 +61,7 @@ class LinkedInProvider extends AbstractProvider implements ProviderInterface
         $response = $this->getHttpClient()->get($url, [
             'headers' => [
                 'x-li-format' => 'json',
-                'Authorization' => 'Bearer ' . $token,
+                'Authorization' => 'Bearer '.$token,
             ],
         ]);
 
@@ -77,5 +78,18 @@ class LinkedInProvider extends AbstractProvider implements ProviderInterface
             'email' => array_get($user, 'emailAddress'), 'avatar' => array_get($user, 'pictureUrl'),
             'avatar_original' => array_get($user, 'pictureUrls.values.0'),
         ]);
+    }
+
+    /**
+     * Set the user fields to request from LinkedIn.
+     *
+     * @param  array  $fields
+     * @return $this
+     */
+    public function fields(array $fields)
+    {
+        $this->fields = $fields;
+
+        return $this;
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use App\Models\Main_page;
 
 
 class UserController extends BaseController 
@@ -78,7 +79,8 @@ class UserController extends BaseController
 			}
 
 		}
-		return view('main')->with('signup_errors', array(isset($errors) ? $errors:null));
+		$main_page = Main_page::where(['active' => 1])->orderBy('updated_at', 'desc')->first();
+		return view('main', ['main_page' => $main_page])->with('signup_errors', array(isset($errors) ? $errors:null));
 
 	}
     // use DispatchesJobs, ValidatesRequests;
@@ -124,12 +126,14 @@ class UserController extends BaseController
 				}
 		 	}
 		}
-	return view('main')->with('login_errors', array(isset($errors) ? $errors:null));
+	$main_page = Main_page::where(['active' => 1])->orderBy('updated_at', 'desc')->first();
+	return view('main', ['main_page' => $main_page])->with('login_errors', array(isset($errors) ? $errors:null));
 
 	}
 
 	public function main() {
-		return View('main');
+		$main_page = Main_page::where(['active' => 1])->orderBy('updated_at', 'desc')->first();
+		return View('main', ['main_page' => $main_page]);
 	}
 
 	public function email() {

@@ -282,16 +282,4 @@ abstract class Controller
     {
         throw new BadMethodCallException("Method [$method] does not exist.");
     }
-
-    /**
-     * @param       $class
-     * @param       $method
-     * @param array $arguments
-     *
-     * @return mixed
-     */
-    public function controllerReroute($class, $method, array $arguments = []){
-        $controller = app()->make($class);
-        return $controller->call([$controller, $method], $arguments);
-    }
 }

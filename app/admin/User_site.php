@@ -1,13 +1,18 @@
 <?php
-
-Admin::model('App\Models\Users_site')->title('Домены')->with('user')->filters(function ()
+Admin::model('App\Models\Users_site')->title('Домены')->display(function ()
 {
-	ModelItem::filter('user_id')->title()->from(App\User::class, 'username');
-
-})->columns(function ()
+	$display = AdminDisplay::datatables();
+	$display->with('user', 'segments');
+	$display->filters([
+		Filter::related('user_id')->model('App\User')->display('name'),
+	]);
+	$display->columns([
+		Column::string('domen')->label('Домен'),
+		Column::string('user.name')->label('Пользователь'),
+		Column::count('segments')->label('Сегменты')->append(Column::filter('domen_id')->model('App\Models\Segment')),
+	]);
+	return $display;
+})->createAndEdit(function ()
 {
-	Column::string('domen', 'Домен')->orderBy('domen')->sortableDefault();
-	Column::string('user.name', 'Пользователь');
-	Column::count('segment', 'Сегменты')->append(Column::filter('domen_id')->model('App\Models\Segment'));
+	return null;
 });
-

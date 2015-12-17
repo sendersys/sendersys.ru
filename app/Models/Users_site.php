@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
-//use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Models\SleepingOwlModel;
+use Illuminate\Database\Eloquent\Model;
 
-class Users_site extends SleepingOwlModel
+class Users_site extends Model
 {
     protected $table = 'users_site';
     protected $fillable = ['domen', 'user_id', 'visitor', 'confirm', 'confirm_hash', 'base_size'];
 
-//    public function segment()
-//    {
-//        return $this->hasMany('App\Models\Segment');
-//    }
+    public function segments()
+    {
+        return $this->hasMany('App\Models\Segment', 'domen_id');
+    }
 
     public function user()
     {

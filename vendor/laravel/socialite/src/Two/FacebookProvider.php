@@ -1,10 +1,9 @@
-<?php namespace Laravel\Socialite\Two;
+<?php
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
+namespace Laravel\Socialite\Two;
 
 class FacebookProvider extends AbstractProvider implements ProviderInterface
 {
-
     /**
      * The base Facebook Graph URL.
      *
@@ -17,14 +16,14 @@ class FacebookProvider extends AbstractProvider implements ProviderInterface
      *
      * @var string
      */
-    protected $version = 'v2.4';
+    protected $version = 'v2.5';
 
     /**
      * The user fields being requested.
      *
      * @var array
      */
-    protected $fields = ['first_name', 'last_name', 'email'];
+    protected $fields = ['first_name', 'last_name', 'email', 'gender', 'verified'];
 
     /**
      * The scopes being requested.
@@ -86,7 +85,9 @@ class FacebookProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get($this->graphUrl.'/'. $this->version .'/me?access_token='.$token.'&fields='.implode(',', $this->fields), [
+        $appSecretProof = hash_hmac('sha256', $token, $this->clientSecret);
+
+        $response = $this->getHttpClient()->get($this->graphUrl.'/'.$this->version.'/me?access_token='.$token.'&appsecret_proof='.$appSecretProof.'&fields='.implode(',', $this->fields), [
             'headers' => [
                 'Accept' => 'application/json',
             ],

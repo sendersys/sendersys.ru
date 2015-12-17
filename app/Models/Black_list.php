@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use SleepingOwl\Models\SleepingOwlModel;
-//use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
 
-class Black_list extends SleepingOwlModel
+class Black_list extends Model
 {
     protected $table = 'black_list';
     protected $fillable = ['email', 'reason'];

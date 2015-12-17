@@ -11,9 +11,9 @@
 				</div>
 			</div>
 		</div>
-		<a href="{{{ Admin::instance()->router->routeToModel($model) }}}">
+		<a href="/admin/{{{ $url }}}">
 			<div class="panel-footer">
-				<span class="pull-left">See Details</span>
+				<span class="pull-left">Подробнее</span>
 				<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 				<div class="clearfix"></div>
 			</div>

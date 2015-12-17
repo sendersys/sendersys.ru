@@ -1,11 +1,19 @@
 <?php
 
-Admin::model('App\Models\Black_list')->title('Черный список')->columns(function ()
+Admin::model('App\Models\Black_list')->title('Черный список')->display(function ()
 {
-	Column::string('email', 'Email')->orderBy('email')->sortableDefault();
-	Column::date('reason', 'Причина занесения')->format('medium', 'none');
-})->form(function ()
+	$display = AdminDisplay::datatables();
+	$display->columns([
+		Column::string('email')->label('Email'),
+		Column::string('reason')->label('Причина занесения')->orderable(false),
+	]);
+	return $display;
+})->createAndEdit(function ()
 {
-	FormItem::text('email', 'Email')->required();
-	FormItem::text('reason', 'Причина занесения');
+	$form = AdminForm::form();
+	$form->items([
+		FormItem::text('email', 'Email')->required(),
+		FormItem::text('reason', 'Причина занесения'),
+	]);
+	return $form;
 });

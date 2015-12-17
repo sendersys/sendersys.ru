@@ -1,5 +1,9 @@
 @include('header')
 
+{{--<pre>--}}
+{{--<?php //print_r($main_page) ?>--}}
+{{--</pre>--}}
+
 <div class="modal fade" id="signup_form" tabindex="-1" role="dialog" aria-labelledby="login_label" aria-hidden="true">
   <?php echo Form::open(array('url' => URL::to('signup', array(), true), 'method' => 'post', 'class' => 'modal-dialog modal-lg')); ?>
     <div class="modal-content login-content">
@@ -55,12 +59,12 @@
 </div>
 <div class = "row">
 	<div class = "col-md-12">
-	<p class = "text-center big-text center-block">Удобный сервис привлечения трафика для</br> контентных проектов через email</p>
+	<p class = "text-center big-text center-block">{!! $main_page->first_string !!}</p>
 	</div>
 </div>
 <div class = "row">
 	<div class = "col-md-12">
-	<p class = "text-center medium-text">Собирайте подписчиков и делайте рассылки</br>Получайте дополнительный трафик бесплатно</p>
+	<p class = "text-center medium-text">{!! $main_page->second_string !!}</p>
 	
 	</div>
 </div>
@@ -77,31 +81,23 @@
 <div class = "container">
 	<div class = "row">
 		<div class = "col-md-12">
-			<p class = "howwork text-center center-block">Как это работает?</p>
+			<p class = "howwork text-center center-block">{!! $main_page->content_title !!}</p>
 		</div>
 	</div>
 	<div class = "row">
 		<div class = "col-md-6 col-xs-12">
-			<div class = "howwork__title h2 center-block text-center">Простейшая интеграция:</div>
-			
-				<p class = "howwork__list pull-left col-md-10 col-md-offset-1"><span class = "point">&#8226; </span> Вы устанавливаете наш виджет и он сразу начинает собирать ваших подписчиков.</p>
-				</br>
-				<p class = "howwork__list pull-left col-md-10 col-md-offset-1">&#8226;  Вы можете загрузить в свой аккаунт действующих подписчиков и делать рассылки по ним.</p>
-			
+			<div class = "howwork__title h2 center-block text-center">{!! $main_page->first_column_title !!}</div>
+			{!! $main_page->first_column_text !!}
 		</div>
 		<div class = "col-md-6 col-xs-12">
-			<div class = "howwork__title h2 center-block text-center">Отличный эффект:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-			
-				<p class = "howwork__list pull-left col-md-10 col-md-offset-1"><span class = "point">&#8226; </span> Выберите шаблон и поставьте ваши рассылки на автомат.</p>
-				</br>
-				<p class = "howwork__list pull-left col-md-10 col-md-offset-1">&#8226;  Система сделает рассылку в указанное вами время, а вам останется только наблюдать за ростом вашего трафика.</p>
-			
+			<div class = "howwork__title h2 center-block text-center">{!! $main_page->second_column_title !!}</div>
+			{!! $main_page->second_column_text !!}
 		</div>
 	</div>
 
 	<div class = "row">
 		<div class = "col-md-12">
-			<p class = "itwork text-center center-block">Это работает очень просто и очень эффективно!</br>Попробуйте сами</p>
+			<p class = "itwork text-center center-block">{!! $main_page->first_footer_string !!}</p>
 		</div>
 	</div>
 	<div class = "row">
